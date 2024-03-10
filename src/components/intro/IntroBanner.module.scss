@@ -1,0 +1,24 @@
+.intro {
+    .left {
+        @apply flex-auto relative xl:h-[550px] col-span-2 py-5 px-4 sm:p-large xl:py-x2-large xl:px-x-large rounded-2xl xs:rounded-large overflow-hidden;
+        background: linear-gradient(77deg, #eff3f5 16.98%, rgba(255, 255, 255, 0) 52.37%),
+            var(--color-neutral-white, #fff);
+ 
+        .image {
+            @apply absolute bottom-0 right-0 z-10 object-contain mix-blend-darken;
+        }
+    }
+
+    .content {
+        @apply relative z-20 mb-5 md:mb-space-large xl:mb-x-large;
+    }
+
+    .entry {
+        @apply relative z-20;
+    }
+
+    .right {
+        @apply grid sm:flex xl:flex-col gap-3 md:gap-5 col-span-2;
+        flex: 0 0 520px;
+    }
+}

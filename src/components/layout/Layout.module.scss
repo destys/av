@@ -1,0 +1,17 @@
+.wrapper {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	@supports (overflow: clip) {
+		overflow: clip;
+	}
+	// Прижимаем footer
+	& > .main {
+		@apply relative flex-auto py-[75px] sm:py-[90px] lg:py-[120px] rounded-b-large bg-white;
+	}
+	// Фикс для слайдеров
+	> * {
+		min-width: 0;
+	}
+}

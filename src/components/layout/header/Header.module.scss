@@ -1,0 +1,19 @@
+.header {
+    @apply fixed w-full top-0 left-0 z-[1000] py-2.5 px-2.5 xs:px-5 sm:px-large bg-white rounded-b-large;
+
+    .left {
+        @apply grid grid-cols-2 sm:grid-cols-3 items-center gap-5 w-full md:flex md:w-auto;
+
+        .mobileMenu {
+            @apply order-3 ml-auto md:hidden;
+        }
+    }
+
+    .right {
+        @apply hidden md:flex md:items-center md:gap-5;
+
+        .auth {
+            @apply flex items-center gap-5 pl-5 bg-lynch-100 rounded-large lg:py-1.5 lg:pl-9 lg:pr-1.5;
+        }
+    }
+}

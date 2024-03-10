@@ -1,0 +1,7 @@
+.calculate {
+    @apply text-white overflow-hidden;
+
+    .content {
+        @apply relative z-10 max-w-[1000px];
+    }
+}

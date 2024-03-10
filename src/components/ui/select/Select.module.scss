@@ -1,0 +1,13 @@
+// Select.module.scss
+
+.custom-select-container {
+  @apply relative w-full;
+}
+
+.custom-select {
+  @apply bg-white py-1.5 px-4 xs:py-2.5 xs:px-5 xl:py-4 xl:px-large w-full border-2 border-lynch-100 rounded-x-large xl:text-2xl text-lynch hover:border-navy-600 hover:bg-navy-100 hover:text-sapphire focus:border-navy-600 focus:bg-navy-100 focus:text-sapphire transition;
+
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+}

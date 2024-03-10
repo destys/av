@@ -1,0 +1,20 @@
+.text {
+    .content {
+        @apply text-lynch-700 md:text-2xl;
+        max-height: calc(1.5em * 16);
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+
+        &.expanded {
+            max-height: none;
+        }
+
+        h3 {
+            @apply my-5 md:my-space-large;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+    }
+}

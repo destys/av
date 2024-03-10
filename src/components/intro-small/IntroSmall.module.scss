@@ -1,0 +1,18 @@
+.intro {
+    .container {
+        @apply grid grid-cols-2 gap-5 md:gap-space-large;
+    }
+    .top {
+        @apply col-span-2 p-5 sm:p-large lg:py-x2-large lg:px-x-large relative rounded-2xl xs:rounded-large overflow-hidden;
+
+        background: linear-gradient(77deg, #eff3f5 16.98%, rgba(255, 255, 255, 0) 52.37%),
+            var(--color-neutral-white, #fff);
+
+        .content {
+            @apply md:max-w-[calc(100%-500px)] lg:max-w-[65%];
+        }
+        .image {
+            @apply absolute bottom-0 right-0;
+        }
+    }
+}

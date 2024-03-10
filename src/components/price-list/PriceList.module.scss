@@ -1,0 +1,13 @@
+.price_list {
+    .top {
+        @apply grid xl:grid-cols-2 gap-5 mb-5 xs:mb-space-large xl:mb-x-large;
+
+        p {
+            @apply xl:text-right;
+        }
+    }
+
+    .list {
+        @apply grid gap-1.5 xs:gap-2.5 md:gap-4;
+    }
+}

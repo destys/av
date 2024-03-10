@@ -1,0 +1,7 @@
+.catalog {
+    .container {
+        @apply grid gap-4 py-4 px-2.5 2xl:p-x-large rounded-2xl xs:rounded-large;
+        background: linear-gradient(77deg, #eff3f5 16.98%, rgba(255, 255, 255, 0) 52.37%),
+            var(--color-neutral-white, #fff);
+    }
+}
