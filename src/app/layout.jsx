@@ -8,7 +8,6 @@ const golos = Golos_Text({ subsets: ["latin"] });
 import "./globals.scss";
 import ModalProvider from "@/providers/ModalProvider";
 
-
 const revalidate = 0;
 
 export const metadata = {

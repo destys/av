@@ -3,17 +3,13 @@
 
     .left {
         @apply grid grid-cols-2 sm:grid-cols-3 items-center gap-5 w-full md:flex md:w-auto;
-
-        .mobileMenu {
-            @apply order-3 ml-auto md:hidden;
-        }
     }
 
     .right {
-        @apply hidden md:flex md:items-center md:gap-5;
+        @apply flex md:items-center md:gap-5;
 
         .auth {
-            @apply flex items-center gap-5 pl-5 bg-lynch-100 rounded-large lg:py-1.5 lg:pl-9 lg:pr-1.5;
+            @apply hidden md:flex items-center gap-5 pl-5 bg-lynch-100 rounded-large lg:py-1.5 lg:pl-9 lg:pr-1.5;
         }
     }
 }

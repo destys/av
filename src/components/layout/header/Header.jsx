@@ -9,6 +9,7 @@ import useAuthModal from "@/hooks/useAuthModal";
 import useRegistrationModal from "@/hooks/useRegistrationModal";
 import useCallbackModal from "@/hooks/useCallbackModal";
 import Select from "@/components/ui/select/Select";
+import Icon from "@/components/ui/icon/Icon";
 
 export default function Header() {
   const authModal = useAuthModal();
@@ -16,8 +17,8 @@ export default function Header() {
   const callbackModal = useCallbackModal();
 
   const options = [
-    { label: "Москва", value: "msk" },
     { label: "Санкт-Петербург", value: "spb" },
+    { label: "Москва", value: "msk" },
   ];
 
   const handleSelect = (selectedOption) => {
@@ -29,18 +30,20 @@ export default function Header() {
       <div className="flex justify-between items-center gap-5 container">
         <div className={styles.left}>
           <Logotype className="order-2 md:order-1" />
-          <div className="hidden sm:flex sm:items-center sm:gap-2 sm:order-1 md:order-2">
-            <span className="hidden xl:block text-2xl text-lynch-300">
+          <div className="hidden w-fit sm:flex sm:items-center sm:gap-2 sm:order-1 md:order-2">
+            <span className="hidden xl:block text-xl text-lynch-300">
               Город:
             </span>
-            <Select
-              options={options}
-              onSelect={handleSelect}
-              selectClassNames="!p-0 !bg-transparent border-none text-lg !text-navy underline !rounded-none lg:text-xl"
-            />
-          </div>
-          <div className={styles.mobileMenu}>
-            <IconButton icon={"menu-burger"} size={18} type="filled" />
+            <div className="flex gap-3 items-center">
+              <Select
+                options={options}
+                onSelect={handleSelect}
+                selectClassNames="!p-0 !bg-transparent border-none text-lg !text-navy underline !rounded-none lg:text-xl"
+              />
+              <button className="order-3">
+                <Icon name={"info"} size={24} color={"fill-navy"} />
+              </button>
+            </div>
           </div>
         </div>
         <div className={styles.right}>
@@ -48,6 +51,7 @@ export default function Header() {
             type={"outlined"}
             icon={"support"}
             onClick={callbackModal.onOpen}
+            className="max-md:max-w-[35px] max-md:max-h-[35px] max-md:p-2"
           />
           <div className={styles.auth}>
             <Button
