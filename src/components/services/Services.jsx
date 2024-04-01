@@ -1,18 +1,14 @@
-"use client";
-
-import { useState, useEffect, useRef } from "react";
-import Button from "@/components/ui/button/Button";
 import styles from "./Services.module.scss";
 import ServicesItem from "./services-item/ServicesItem";
 
 export default function Services({ title, data, isPage }) {
-  const gridRef = useRef(null); // Создаем ref для доступа к элементу
+  //const gridRef = useRef(null); // Создаем ref для доступа к элементу
 
-  const [primaryItems, setPrimaryItems] = useState([]);
+/*   const [primaryItems, setPrimaryItems] = useState([]);
   const [secondaryItems, setSecondaryItems] = useState([]);
-  const [visibleItems, setVisibleItems] = useState(0);
+  const [visibleItems, setVisibleItems] = useState(0); */
 
-  useEffect(() => {
+/*   useEffect(() => {
     // Получаем реальное количество элементов в строке сетки
     const gridElement = gridRef.current;
     if (gridElement) {
@@ -27,12 +23,12 @@ export default function Services({ title, data, isPage }) {
       const initialVisibleItems = gridColumnCount * 2;
       setVisibleItems(initialVisibleItems);
     }
-  }, [secondaryItems]);
+  }, [secondaryItems]); */
 
-  useEffect(() => {
+/*   useEffect(() => {
     setPrimaryItems(data?.primary?.data);
     setSecondaryItems(data?.secondary?.data);
-  }, [data]);
+  }, [data]); */
 
   const handleExpandClick = () => {
     // При нажатии на кнопку увеличиваем количество видимых элементов
@@ -51,26 +47,26 @@ export default function Services({ title, data, isPage }) {
             профессиональных услуг по ремонту авто.{" "}
           </p>
         </div>
-        {primaryItems.length > 0 && (
+        {data?.length > 0 && (
           <div className={`${styles.list_primary}  ${isPage && styles.isPage}`}>
-            {primaryItems.map((item, index) => (
+            {data.map((item, index) => (
               <ServicesItem
                 key={item.id}
                 item={item}
-                type="primary"
+                type={item.attributes.icon.data ? "primary" : "secondary"}
                 isPage={isPage}
               />
             ))}
           </div>
         )}
-        {secondaryItems.length > 0 && (
+        {/* {secondaryItems.length > 0 && (
           <div className={styles.list_secondary} ref={gridRef}>
             {secondaryItems.slice(0, visibleItems).map((item, index) => (
               <ServicesItem key={item.id} item={item} type="secondary" />
             ))}
           </div>
-        )}
-        {visibleItems < secondaryItems.length && (
+        )} */}
+        {/* {visibleItems < secondaryItems.length && (
           <Button
             style={"outlined-full"}
             icon={"arrow-down"}
@@ -78,7 +74,7 @@ export default function Services({ title, data, isPage }) {
           >
             Развернуть список
           </Button>
-        )}
+        )} */}
       </div>
     </section>
   );

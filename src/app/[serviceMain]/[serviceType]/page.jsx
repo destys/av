@@ -1,21 +1,22 @@
+import getServicesMain from "@/actions/GetServicesMain";
+
 import FAQ from "@/components/faq/FAQ";
 import IntroBanner from "@/components/intro/IntroBanner";
 import OurService from "@/components/our-service/OurService";
-import { SERVICES } from "./services.data";
 import Search from "@/components/search/Search";
 import Services from "@/components/services/Services";
 import TextBlock from "@/components/text-block/TextBlock";
 
-export default function ServicesPage() {
+export default async function ServicesTypePage({ params }) {
+  console.log("params: ", params);
+  const page = await getServicesMain(
+    `service-types?populate=deep&filters[slug][$eq]=${params.serviceType}`
+  );
   return (
     <>
-      <IntroBanner
-        image={"car-gear-inside.png"}
-        imageWidth={511}
-        imageHeight={397}
-      />
+      <IntroBanner data={page[0].attributes.intro} />
       <Search />
-      <Services data={SERVICES} isPage={true} />
+      <Services data={page[0].attributes.service_types?.data} isPage={true} />
       <OurService />
       <FAQ />
       <TextBlock />
