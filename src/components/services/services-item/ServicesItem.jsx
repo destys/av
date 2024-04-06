@@ -7,9 +7,8 @@ import Link from "next/link";
 import styles from "./ServicesItem.module.scss";
 import { usePathname } from "next/navigation";
 
-export default function ServicesItem({ item, type, isPage }) {
+export default function ServicesItem({ params, item, type, isPage }) {
   const currentPath = usePathname();
-  console.log("currentPath: ", currentPath);
   return (
     <>
       {type === "primary" && (
@@ -17,7 +16,7 @@ export default function ServicesItem({ item, type, isPage }) {
           href={
             currentPath === "/"
               ? item.attributes.slug
-              : `${currentPath}/${item.attributes.slug}`
+              : `${currentPath}_${item.attributes.slug}`
           }
           className={`${styles.primary} ${isPage && styles.servicesPage}`}
         >
@@ -26,7 +25,7 @@ export default function ServicesItem({ item, type, isPage }) {
               src={`${process.env.API_URL}${item.attributes.icon?.data.attributes.url}`}
               width={96}
               height={96}
-              alt={item.title}
+              alt= {item.attributes.title}
               className="max-w-12 md:max-w-[82px] xl:max-w-none"
             />
           )}
@@ -41,7 +40,7 @@ export default function ServicesItem({ item, type, isPage }) {
           href={
             currentPath === "/"
               ? item.attributes.slug
-              : `${currentPath}/${item.attributes.slug}`
+              : `${currentPath}_${item.attributes.slug}`
           }
           className={styles.secondary}
         >

@@ -5,19 +5,26 @@ import OurService from "@/components/our-service/OurService";
 import Search from "@/components/search/Search";
 import Services from "@/components/services/Services";
 import TextBlock from "@/components/text-block/TextBlock";
-import getPage from "../actions/GetPage";
-import getServicesMain from "../actions/GetServicesMain";
+import getPage from "../../actions/GetPage";
+import getData from "../../actions/GetData";
 
-const revalidate = 0;
+export async function generateMetadata({ params, searchParams }, parent) {
+  const page = await getPage("main-page");
+
+  return {
+    title: page.attributes?.SEO.meta_title || page.attributes.title,
+    description: page.attributes?.SEO?.meta_description,
+    canonical: page.attributes.title,
+  };
+}
 
 export default async function Home() {
   const page = await getPage("main-page");
-  console.log('page: ', page);
-  const services = await getServicesMain("services-main?populate=deep");
+  const services = await getData("services-main?populate=deep");
 
   return (
     <>
-      <IntroBanner data={page.data.attributes.intro} />
+      <IntroBanner data={page.attributes.intro} />
       <Search />
       <Services data={services} />
       <OurService />

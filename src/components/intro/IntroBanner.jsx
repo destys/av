@@ -12,7 +12,7 @@ export default function IntroBanner({ data }) {
       <div className="container grid grid-cols-2 gap-5 sm:gap-space-large xl:flex ">
         <div className={styles.left}>
           <div className={styles.image}>
-            {data?.image.attributes && (
+            {data?.image.data?.attributes && (
               <Image
                 src={`${process.env.API_URL}${data.image.data.attributes.formats.small.url}`}
                 width={data.image.data.attributes.formats.small.width}

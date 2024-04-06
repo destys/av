@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 
 import Icon from "@/components/ui/icon/Icon";
-import Link from "next/link";
 
 export default function CatalogItem({ item }) {
   const [open, setOpen] = useState(false);
@@ -15,18 +15,22 @@ export default function CatalogItem({ item }) {
         onClick={() => setOpen(!open)}
       >
         <Image
-          src={`/illustrations/${item.illustration}.svg`}
+          src={`${process.env.API_URL}${item.attributes.icon?.data.attributes.url}`}
           width={64}
           height={64}
           alt={item.title}
           className="hidden sm:block"
         />
-        <h5 className="flex-auto">{item.title}</h5>
+        <h5 className="flex-auto text-sm md:text-xl xl:text-[32px]">
+          {item.attributes.title}
+        </h5>
         <Icon
           name={"arrow-down"}
           size={48}
           color={"fill-navy"}
-          className={`${open && "rotate-90"} transition max-sm:max-w-[24px] max-sm:text-sm`}
+          className={`${
+            open && "rotate-90"
+          } transition max-sm:max-w-[24px] max-sm:text-sm`}
         />
       </div>
       <ul
@@ -34,13 +38,16 @@ export default function CatalogItem({ item }) {
           !!open && " py-4 opacity-100 h-auto !z-10"
         }`}
       >
-        {item.subcategories.map((item) => (
+        {item.attributes.services_sub.data.map((subcategory) => (
           <li
-            key={item.id}
+            key={subcategory.id}
             className="leading-normal text-sm md:text-xl xl:text-[32px]"
           >
-            <Link href={"/#"} className="hover:text-navy transition">
-              {item.title}
+            <Link
+              href={`${item.attributes.slug}_${subcategory.attributes.slug}`}
+              className="hover:text-navy transition"
+            >
+              {subcategory.attributes.title}
             </Link>
           </li>
         ))}

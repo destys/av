@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styles from "./Select.module.scss";
 import { twMerge } from "tailwind-merge";
 
-const Select = ({ options, onSelect, placeholder, selectClassNames }) => {
+const Select = ({ options, onSelect, placeholder, selectClassNames, id }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleSelectChange = (event) => {
@@ -22,6 +22,7 @@ const Select = ({ options, onSelect, placeholder, selectClassNames }) => {
         value={selectedOption ? selectedOption.value : ""}
         onChange={handleSelectChange}
         className={twMerge(styles["custom-select"], selectClassNames)}
+        id={id ? id : ""}
       >
         {placeholder && (
           <option value="" disabled hidden>

@@ -1,0 +1,88 @@
+import { pathToRegexp } from "path-to-regexp";
+
+import getServicesMain from "@/actions/GetData";
+
+import IntroSmall from "@/components/intro-small/IntroSmall";
+import Models from "@/components/models/Models";
+import Search from "@/components/search/Search";
+import PriceList from "@/components/price-list/PriceList";
+import Calculate from "@/components/calculate/Calculate";
+import Services from "@/components/services/Services";
+import TextBlock from "@/components/text-block/TextBlock";
+import FAQ from "@/components/faq/FAQ";
+
+export default async function CarPage({ params }) {
+  const regexpServices = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}?").exec(
+    `/${params.services}`
+  );
+  const regexpCar = pathToRegexp("/:attr1?{_:attr2}?").exec(`/${params.car}`);
+  console.log("regexpCar: ", regexpCar[2]);
+
+  const getCarQuery = () => {
+    if (regexpCar[2]) {
+      return `car-models?populate=deep&filters[slug][$eq]=${regexpCar[2]}`;
+    }
+    if (regexpCar[1]) {
+      return `car-brands?populate=deep&filters[slug][$eq]=${regexpCar[1]}`;
+    }
+
+    return null;
+  };
+
+  const getServiceQuery = () => {
+    const queries = {
+      1: `services-main`,
+      2: `service-types`,
+      3: `services-sub`,
+    };
+
+    if (regexpServices[3]) {
+      return `${queries[3]}?populate=deep&filters[slug][$eq]=${regexpServices[3]}`;
+    }
+
+    if (regexpServices[2]) {
+      return `${queries[2]}?populate=deep&filters[slug][$eq]=${regexpServices[2]}`;
+    }
+
+    if (regexpServices[1]) {
+      return `${queries[1]}?populate=deep&filters[slug][$eq]=${regexpServices[1]}`;
+    }
+
+    return null;
+  };
+
+  const pageCar = await getServicesMain(getCarQuery());
+
+  if (!pageCar.length) {
+    return null;
+  }
+
+  console.log("pageCar: ", pageCar);
+  const pageService = await getServicesMain(getServiceQuery());
+  console.log("pageService: ", pageService);
+
+  return (
+    <>
+      <IntroSmall
+        title={
+          pageService[0]?.attributes.intro
+            ? `${pageService[0]?.attributes.intro.h1} ${pageCar[0]?.attributes.car_brand.data?.attributes?.Intro?.h1} ${pageCar[0]?.attributes.intro?.h1}`
+            : pageCar[0]?.attributes.intro?.h1
+        }
+        data={pageCar[0]?.attributes.intro}
+        parentData={pageService[0]?.attributes.intro}
+        isShowAdditional={true}
+      />
+      <Models />
+      <Search />
+      <PriceList />
+      <Calculate />
+      <Services
+        title="Другие услуги для Audi"
+        data={pageCar[0]?.attributes.service_types?.data}
+      />
+      <TextBlock />
+      <FAQ />
+    </>
+  );
+}

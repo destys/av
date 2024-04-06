@@ -39,6 +39,7 @@ export default function Header() {
                 options={options}
                 onSelect={handleSelect}
                 selectClassNames="!p-0 !bg-transparent border-none text-lg !text-navy underline !rounded-none lg:text-xl"
+                id={"city"}
               />
               <button className="order-3">
                 <Icon name={"info"} size={24} color={"fill-navy"} />
