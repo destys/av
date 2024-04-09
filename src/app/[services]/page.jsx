@@ -39,6 +39,10 @@ export default async function ServicesMainPage({ params }) {
 
   const page = await getData(getQuery());
 
+  if (page.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <IntroBanner data={page[0].attributes.intro} />

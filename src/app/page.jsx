@@ -5,8 +5,9 @@ import OurService from "@/components/our-service/OurService";
 import Search from "@/components/search/Search";
 import Services from "@/components/services/Services";
 import TextBlock from "@/components/text-block/TextBlock";
-import getPage from "../../actions/GetPage";
-import getData from "../../actions/GetData";
+
+import getPage from "@/actions/GetPage";
+import getData from "@/actions/GetData";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const page = await getPage("main-page");
