@@ -1,23 +1,34 @@
-'use client';
-import React from "react";
-import Select from "../ui/select/Select";
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
 
-export default function EntryModel() {
-  const handleSelect = (selectedOption) => {
-    console.log("Selected option:", selectedOption);
+import Select from "../ui/select/Select";
+import Button from "../ui/button/Button";
+
+export default function EntryModel({ params, brands }) {
+  const [link, setLink] = useState("");
+  const [selectedOption, setSelectedOption] = useState([]);
+
+  const handleSelectBrand = (selectedOption) => {
+    setSelectedOption(selectedOption.models);
+    setLink(selectedOption.slug);
+  };
+  const handleSelectModel = (selectedOption) => {
+    setLink(`${link}_${selectedOption.slug}`);
   };
 
-  const options = [
-    { label: "Audi", value: "Audi" },
-    { label: "BMW", value: "BMW" },
-    { label: "Volkswagen", value: "volkswagen" },
-  ];
+  const options = brands.map((item) => ({
+    label: item.attributes.title,
+    value: item.attributes.title.toLowerCase(),
+    slug: item.attributes.slug,
+    models: item.attributes.car_models.data,
+  }));
 
-  const options_models = [
-    { label: "Model 1", value: "model_1" },
-    { label: "Model 2", value: "model_2" },
-    { label: "Model 3", value: "model_3" },
-  ];
+  const options_models = selectedOption.map((item) => ({
+    label: item.attributes.title,
+    value: item.attributes.title.toLowerCase(),
+    slug: item.attributes.slug,
+  }));
 
   return (
     <>
@@ -25,14 +36,24 @@ export default function EntryModel() {
       <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-4 max-w-[660px]">
         <Select
           options={options}
-          onSelect={handleSelect}
+          onSelect={handleSelectBrand}
           placeholder={"Выберите марку"}
         />
         <Select
           options={options_models}
-          onSelect={handleSelect}
+          onSelect={handleSelectModel}
           placeholder={"Выберите модель"}
         />
+
+        {link && (
+          <Link
+            href={`${
+              params ? params.services + "/" + link : "catalog/" + link
+            }`}
+          >
+            <Button style="filled" className="w-full">Перейти</Button>
+          </Link>
+        )}
       </div>
     </>
   );

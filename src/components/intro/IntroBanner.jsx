@@ -5,8 +5,10 @@ import EntryModel from "./EntryModel";
 import IntroCallback from "./IntroCallback";
 
 import styles from "./IntroBanner.module.scss";
+import getPage from "@/actions/GetPage";
 
-export default function IntroBanner({ data }) {
+export default async function IntroBanner({ data, params }) {
+  const brands = await getPage("car-brands");
   return (
     <section className={styles.intro}>
       <div className="container grid grid-cols-2 gap-5 sm:gap-space-large xl:flex ">
@@ -27,7 +29,7 @@ export default function IntroBanner({ data }) {
             <p>{data?.description}</p>
           </div>
           <div className={styles.entry}>
-            <EntryModel />
+            <EntryModel brands={brands} params={params} />
           </div>
         </div>
         <div className={styles.right}>

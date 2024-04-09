@@ -1,5 +1,5 @@
 // Select.js
-
+"use client";
 import React, { useState } from "react";
 import styles from "./Select.module.scss";
 import { twMerge } from "tailwind-merge";

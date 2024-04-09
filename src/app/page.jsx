@@ -31,7 +31,7 @@ export default async function Home() {
       <OurService />
       <Calculate />
       <FAQ />
-      <TextBlock />
+      <TextBlock content={page.attributes.text_blocks} />
     </>
   );
 }

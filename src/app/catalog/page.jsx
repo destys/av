@@ -9,7 +9,7 @@ export default function CatalogPage() {
       <IntroSmall
         title="Каталог услуг"
         text=" Автопомощь предлагает широкий спектр услуг для бесперебойной работы вашего автомобиля. Это включает регулярное техническое обслуживание, такое как замена масла, переборка шин, проверка тормозов и жидкостей."
-        image={"catalog.png"}
+        image={"/banner/catalog.png"}
       />
       <Search isShowAllHidden={true} />
       <Catalog />

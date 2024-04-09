@@ -16,7 +16,6 @@ export default async function CarPage({ params }) {
     `/${params.services}`
   );
   const regexpCar = pathToRegexp("/:attr1?{_:attr2}?").exec(`/${params.car}`);
-  console.log("regexpCar: ", regexpCar[2]);
 
   const getCarQuery = () => {
     if (regexpCar[2]) {
@@ -57,30 +56,49 @@ export default async function CarPage({ params }) {
     return null;
   }
 
-  console.log("pageCar: ", pageCar);
   const pageService = await getServicesMain(getServiceQuery());
-  console.log("pageService: ", pageService);
+
+  const serviceTitle = pageService[0]?.attributes?.intro.h1 || "";
+  const currentTitle =
+    pageCar[0]?.attributes.intro?.h1 || pageCar[0]?.attributes.title;
+  const carBrandTitle =
+    pageCar[0].attributes.car_brand?.data.attributes.intro?.h1 ||
+    pageCar[0].attributes.car_brand?.data.attributes.title;
+
+  const pageTitle = `${serviceTitle || ""} ${
+    carBrandTitle || ""
+  }  ${currentTitle}`;
 
   return (
     <>
-      <IntroSmall
-        title={
-          pageService[0]?.attributes.intro
-            ? `${pageService[0]?.attributes.intro.h1} ${pageCar[0]?.attributes.car_brand.data?.attributes?.Intro?.h1} ${pageCar[0]?.attributes.intro?.h1}`
-            : pageCar[0]?.attributes.intro?.h1
-        }
-        data={pageCar[0]?.attributes.intro}
-        parentData={pageService[0]?.attributes.intro}
-        isShowAdditional={true}
-      />
-      <Models />
+      {!!pageCar[0].attributes.intro && (
+        <IntroSmall
+          image={`${process.env.API_URL}${pageCar[0]?.attributes.intro.image.data.attributes.formats.small.url}`}
+          title={pageTitle}
+          description={pageCar[0].attributes.intro.description}
+          data={pageCar[0]?.attributes.intro}
+          parentData={pageService[0]?.attributes.intro}
+          isShowAdditional={true}
+        />
+      )}
+
+      {pageCar[0].attributes.car_models?.data && (
+        <Models
+          data={pageCar[0].attributes.car_models.data}
+          params={params.car}
+        />
+      )}
+
       <Search />
-      <PriceList />
+      <PriceList /> 
       <Calculate />
-      <Services
-        title="Другие услуги для Audi"
-        data={pageCar[0]?.attributes.service_types?.data}
-      />
+      {!!pageCar[0]?.attributes.service_types && (
+        <Services
+          title="Другие услуги для Audi"
+          data={pageCar[0]?.attributes.service_types?.data}
+        />
+      )}
+
       <TextBlock />
       <FAQ />
     </>

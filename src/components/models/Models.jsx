@@ -2,21 +2,33 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
 import ModelsNavigation from "./ModelsNavigation";
-
-import { MODELS, MODELS_options } from "./models.data.js";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import styles from "./Models.module.scss";
 import Select from "../ui/select/Select";
 
-export default function Models() {
+export default function Models({ data, params }) {
+  console.log("data: ", data);
+  const path = usePathname();
+  const router = useRouter();
+
+  const modelOptions = data.map((item) => ({
+    label: item.attributes.title,
+    value: item.attributes.title.toLowerCase(),
+    slug: item.attributes.slug,
+  }));
+
   const handleSelect = (selectedOption) => {
-    console.log("Selected option:", selectedOption);
+    setTimeout(() => {
+      router.push(`${path}_${selectedOption.slug}`);
+    }, 1000);
   };
 
   return (
@@ -45,17 +57,20 @@ export default function Models() {
             <ModelsNavigation />
           </div>
           <div className="overflow-hidden">
-            {MODELS.map((item) => (
+            {data.map((item) => (
               <SwiperSlide key={item.id} className="p-4 bg-white rounded-large">
-                <Link href={"/brand"} className="flex flex-col items-center ">
+                <Link
+                  href={`${params}_${item.attributes.slug}`}
+                  className="flex flex-col items-center "
+                >
                   <Image
-                    src={`/models/${item.image}`}
+                    src={`${process.env.API_URL}${item.attributes.image.data.attributes.formats.small.url}`}
                     width={150}
                     height={150}
                     alt={item.title}
                   />
                   <p className="font-medium text-[32px] uppercase">
-                    {item.title}
+                    {item.attributes.title}
                   </p>
                 </Link>
               </SwiperSlide>
@@ -69,7 +84,7 @@ export default function Models() {
         </div>
         <div className="overflow-hidden">
           <Select
-            options={MODELS_options}
+            options={modelOptions}
             onSelect={handleSelect}
             placeholder={"Выберите модель"}
           />

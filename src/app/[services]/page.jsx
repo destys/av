@@ -45,7 +45,7 @@ export default async function ServicesMainPage({ params }) {
 
   return (
     <>
-      <IntroBanner data={page[0].attributes.intro} />
+      <IntroBanner data={page[0].attributes.intro} params={params} />
       <Search />
       {page[0].attributes.services_sub?.data && (
         <Services data={page[0].attributes.services_sub?.data} isPage={true} />
@@ -53,7 +53,7 @@ export default async function ServicesMainPage({ params }) {
       {page[0].attributes.prices?.data && <PriceList />}
       <OurService />
       <FAQ />
-      <TextBlock />
+      <TextBlock content={page[0].attributes.text} />
     </>
   );
 }
