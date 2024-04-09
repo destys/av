@@ -1,0 +1,16 @@
+.order_list {
+    .top {
+        @apply grid xs:grid-cols-2 mb-5 xs:mb-0 rounded-t-2xl xl:rounded-t-large overflow-hidden;
+
+        button {
+            @apply flex justify-between sm:justify-center items-center gap-2 p-5 md:py-8 md:px-x-large;
+
+            &:last-child {
+                @apply max-xs:rounded-b-2xl;
+            }
+        }
+    }
+    .body {
+        @apply py-5 px-2.5 sm:py-large sm:px-5 md:py-x-large md:px-large xl:p-x-large border-[3px] border-navy-100 rounded-2xl xs:rounded-t-none xs:rounded-b-large bg-navy-100;
+    }
+}
