@@ -6,7 +6,7 @@ import Icon from "@/components/ui/icon/Icon";
 import { PARTNER_ORDERS as ORDERS } from "@/app/profile/orders.data";
 
 import styles from "./OrdersList.module.scss";
-import OrdersItem from "../../../components/orders-item/OrdersItem";
+import OrdersItem from "../../../orders-item/OrdersItem";
 import BlogItem from "../blog-item/BlogItem";
 import Button from "@/components/ui/button/Button";
 import Orders from "./orders/Orders";
