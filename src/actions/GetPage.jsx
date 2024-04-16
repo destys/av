@@ -3,16 +3,27 @@ import axios from "axios";
 const URL = process.env.API_URL;
 export default async function getPage(slug, populate) {
   try {
-    const response = await axios.get(`${URL}/api/${slug}?populate=${populate || 'deep'}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${URL}/api/${slug}?populate=${populate || "deep"}`,
+      {
+        method: "GET",
+        next: { revalidate: 10 },
+        headers: {
+          Authorization: `Bearer ${process.env.API_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    return response.data.data; // Вернуть ответ после успешного выполнения запроса
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`HTTP error ${response.status}: ${errorData.message}`);
+    }
+
+    const data = await response.json();
+    return data.data;
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
-    throw error; // Пробросить ошибку для обработки в вызывающем коде, если запрос не удался
+    throw error;
   }
 }

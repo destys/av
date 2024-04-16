@@ -51,6 +51,7 @@ export default async function CarPage({ params }) {
   };
 
   const pageCar = await getServicesMain(getCarQuery());
+  console.log("pageCar: ", pageCar);
 
   if (!pageCar.length) {
     return null;
@@ -90,7 +91,7 @@ export default async function CarPage({ params }) {
       )}
 
       <Search />
-      <PriceList /> 
+      <PriceList />
       <Calculate />
       {!!pageCar[0]?.attributes.service_types && (
         <Services
@@ -99,7 +100,7 @@ export default async function CarPage({ params }) {
         />
       )}
 
-      <TextBlock />
+      <TextBlock content={pageCar[0].attributes.text_blocks} />
       <FAQ />
     </>
   );

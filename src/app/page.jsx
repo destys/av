@@ -13,7 +13,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
   const page = await getPage("main-page");
 
   return {
-    title: page.attributes?.SEO.meta_title || page.attributes.title,
+    title: page.attributes?.SEO?.meta_title || page.attributes.title,
     description: page.attributes?.SEO?.meta_description,
     canonical: page.attributes.title,
   };

@@ -7,24 +7,27 @@ import Button from "../ui/button/Button";
 
 export default function EntryModel({ params, brands }) {
   const [link, setLink] = useState("");
-  const [selectedOption, setSelectedOption] = useState([]);
+  const [brandSlug, setBrandSlug] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState([]);
 
   const handleSelectBrand = (selectedOption) => {
-    setSelectedOption(selectedOption.models);
+    setSelectedBrand(selectedOption.models);
+    setBrandSlug(selectedOption.slug);
     setLink(selectedOption.slug);
   };
   const handleSelectModel = (selectedOption) => {
-    setLink(`${link}_${selectedOption.slug}`);
+    setLink("");
+    setLink(`${brandSlug}_${selectedOption.slug}`);
   };
 
   const options = brands.map((item) => ({
     label: item.attributes.title,
     value: item.attributes.title.toLowerCase(),
     slug: item.attributes.slug,
-    models: item.attributes.car_models.data,
+    models: item.attributes.car_models?.data,
   }));
 
-  const options_models = selectedOption.map((item) => ({
+  const options_models = selectedBrand.map((item) => ({
     label: item.attributes.title,
     value: item.attributes.title.toLowerCase(),
     slug: item.attributes.slug,
@@ -51,7 +54,9 @@ export default function EntryModel({ params, brands }) {
               params ? params.services + "/" + link : "catalog/" + link
             }`}
           >
-            <Button style="filled" className="w-full">Перейти</Button>
+            <Button style="filled" className="w-full">
+              Перейти
+            </Button>
           </Link>
         )}
       </div>
