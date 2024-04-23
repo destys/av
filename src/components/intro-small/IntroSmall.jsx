@@ -4,7 +4,12 @@ import Button from "../ui/button/Button";
 
 import styles from "./IntroSmall.module.scss";
 
-export default function IntroSmall({ title, description, image, isShowAdditional }) {
+export default function IntroSmall({
+  title,
+  description,
+  image,
+  isShowAdditional,
+}) {
   return (
     <section className={styles.intro}>
       <div className={"container " + styles.container}>
@@ -15,15 +20,17 @@ export default function IntroSmall({ title, description, image, isShowAdditional
               {description}
             </p>
           </div>
-          <div className={styles.image}>
-            <Image
-              src={image}
-              width={536}
-              height={300}
-              alt="Ремонт блока цилиндров Audi"
-              className="hidden md:block object-contain max-w-[500px]"
-            />
-          </div>
+          {image !== "undefined" && (
+            <div className={styles.image}>
+              <Image
+                src={process.env.API_URL + image}
+                width={536}
+                height={300}
+                alt="Ремонт блока цилиндров Audi"
+                className="hidden md:block object-contain max-w-[500px]"
+              />
+            </div>
+          )}
         </div>
         {isShowAdditional && (
           <>

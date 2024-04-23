@@ -9,9 +9,7 @@ export default function CityChoice() {
     { label: "Москва", value: "msk" },
   ];
 
-  const handleSelect = (selectedOption) => {
-    console.log("Selected option:", selectedOption);
-  };
+  const handleSelect = (selectedOption) => {};
 
   return (
     <div className="hidden w-fit sm:flex sm:items-center sm:gap-2 sm:order-1 md:order-2">

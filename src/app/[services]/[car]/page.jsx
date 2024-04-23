@@ -51,8 +51,6 @@ export default async function CarPage({ params }) {
   };
 
   const pageCar = await getServicesMain(getCarQuery());
-  console.log("pageCar: ", pageCar);
-
   if (!pageCar.length) {
     return null;
   }
@@ -74,7 +72,7 @@ export default async function CarPage({ params }) {
     <>
       {!!pageCar[0].attributes.intro && (
         <IntroSmall
-          image={`${process.env.API_URL}${pageCar[0]?.attributes.intro.image.data.attributes.formats.small.url}`}
+          image={`${pageCar[0]?.attributes?.intro.image.data?.attributes.formats.small.url}`}
           title={pageTitle}
           description={pageCar[0].attributes.intro.description}
           data={pageCar[0]?.attributes.intro}

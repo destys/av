@@ -15,7 +15,6 @@ import styles from "./Models.module.scss";
 import Select from "../ui/select/Select";
 
 export default function Models({ data, params }) {
-  console.log("data: ", data);
   const path = usePathname();
   const router = useRouter();
 

@@ -85,9 +85,7 @@ export default function CallbackModal() {
     },
   ];
 
-  const handleSelect = (selectedOption) => {
-    console.log("Selected option:", selectedOption);
-  };
+  const handleSelect = (selectedOption) => {};
 
   const handleSelectService = (selectedOption) => {
     setServiceDescription(selectedOption.description);

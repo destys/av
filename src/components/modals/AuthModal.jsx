@@ -42,7 +42,7 @@ export default function AuthModal() {
       })
       .catch((error) => {
         // Handle error.
-        console.log("An error occurred:", error.response);
+        console.error("An error occurred:", error.response);
         setIsLoading(false);
       });
   };

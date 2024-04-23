@@ -2,7 +2,6 @@ import OrdersList from "./components/orders-list/OrdersList";
 import ProfileIntro from "./components/profile-intro/ProfileIntro";
 
 export default function PartnerPage({ user }) {
-  console.log("user: ", user);
   return (
     <div>
       <div className="container">

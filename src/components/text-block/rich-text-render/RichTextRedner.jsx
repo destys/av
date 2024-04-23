@@ -1,7 +1,6 @@
 import React from "react";
 
 const RichTextRenderer = ({ blocks }) => {
-  console.log("blocks: ", blocks);
   return (
     <>
       {blocks.map((block, index) => {

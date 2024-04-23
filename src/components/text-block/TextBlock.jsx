@@ -6,7 +6,6 @@ import { useState } from "react";
 import RichTextRenderer from "./rich-text-render/RichTextRedner";
 
 export default function TextBlock({ content }) {
-  console.log('content: ', content);
   const [open, setOpen] = useState(false);
 
   if (!content) {

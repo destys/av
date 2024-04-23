@@ -25,7 +25,6 @@ export default function ProfileLayout() {
         );
 
         setUser(response.data);
-        console.log('response.data: ', response.data);
       } catch (error) {
         console.error("Ошибка при получении данных о пользователе:", error);
         // Можно обработать ошибку здесь или пробросить её для обработки в вызывающем коде
