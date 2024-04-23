@@ -18,7 +18,13 @@ const nextConfig = {
     },
   ],
   images: {
-    domains: ['api.lipsar.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.lipsar.com',
+        pathname: '**',
+      },
+    ],
   },
 }
 

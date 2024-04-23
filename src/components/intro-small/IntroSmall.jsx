@@ -26,7 +26,7 @@ export default function IntroSmall({
                 src={process.env.API_URL + image}
                 width={536}
                 height={300}
-                alt="Ремонт блока цилиндров Audi"
+                alt={title}
                 className="hidden md:block object-contain max-w-[500px]"
               />
             </div>

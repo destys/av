@@ -21,7 +21,9 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
 export default async function Home() {
   const page = await getPage("main-page");
-  const services = await getData("services-main?populate=deep");
+  const services = await getData(
+    "services-main?populate=deep&pagination[pageSize]=2000"
+  );
 
   return (
     <>
