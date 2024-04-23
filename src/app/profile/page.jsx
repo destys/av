@@ -10,7 +10,6 @@ import PartnerPage from "./components/partner/PartnerPage";
 export default function ProfileLayout() {
   const { jwtToken } = useAuthStore();
   const [user, setUser] = useState({});
-  console.log('user: ', user);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,6 +1,7 @@
 import React from "react";
 
 const RichTextRenderer = ({ blocks }) => {
+  console.log("blocks: ", blocks);
   return (
     <>
       {blocks.map((block, index) => {
@@ -31,9 +32,11 @@ const RichTextRenderer = ({ blocks }) => {
             );
           case "list":
             return (
-              <ul key={index}>
-                {block.items.map((item, idx) => (
-                  <li key={idx}>{item}</li>
+              <ul key={index} className="mb-2">
+                {block.children.map((item, idx) => (
+                  <li key={idx} className=" list-inside list-disc mb-1">
+                    {item.children[0].text}
+                  </li>
                 ))}
               </ul>
             );

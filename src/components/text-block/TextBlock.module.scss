@@ -13,8 +13,9 @@
             @apply my-5 md:my-space-large;
         }
 
-        p {
-            margin-bottom: 1rem;
+        p,
+        ul {
+            @apply mb-4;
         }
     }
 }

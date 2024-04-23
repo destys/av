@@ -14,6 +14,6 @@ const useAuthStore = create((set) => ({
     set({ jwtToken: null });
     localStorage.removeItem("jwtToken");
   },
-}));
+})); 
 
 export default useAuthStore;
