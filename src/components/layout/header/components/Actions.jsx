@@ -13,7 +13,7 @@ import styles from "../Header.module.scss";
 export default function Actions() {
   const authModal = useAuthModal();
   const registrationModal = useRegistrationModal();
-  const { jwtToken, logout } = useAuthStore();
+  const { jwtToken, login, logout } = useAuthStore();
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -38,6 +38,11 @@ export default function Actions() {
     fetchData();
   }, [jwtToken]);
 
+  const handleLogut = () => {
+    logout();
+    setUser({});
+  };
+
   return (
     <div className={styles.auth}>
       {user.id ? (
@@ -46,7 +51,7 @@ export default function Actions() {
             {user.name}
           </Link>
           <IconButton
-            onClick={logout}
+            onClick={handleLogut}
             icon="logout"
             type="filled"
             className="max-md:max-w-[35px] max-md:max-h-[35px] max-md:p-2"
@@ -61,7 +66,6 @@ export default function Actions() {
             Регистрация
           </Button>
           <Button
-            link={"/test"}
             title={"Вход"}
             icon="login"
             style={"filled"}

@@ -9,6 +9,7 @@ import getPage from "@/actions/GetPage";
 
 export default async function IntroBanner({ data, params }) {
   const brands = await getPage("car-brands");
+  
   return (
     <section className={styles.intro}>
       <div className="container grid grid-cols-2 gap-5 sm:gap-space-large xl:flex ">

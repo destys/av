@@ -6,10 +6,14 @@ import useAuthStore from "@/hooks/useAuthStore";
 
 import ClientPage from "./components/client/ClientPage";
 import PartnerPage from "./components/partner/PartnerPage";
+import { useRouter } from "next/navigation";
+import Loader from "@/components/ui/loader/Loader";
 
 export default function ProfileLayout() {
+  const [isLoading, setIsLoading] = useState(true);
   const { jwtToken } = useAuthStore();
   const [user, setUser] = useState({});
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,8 +30,10 @@ export default function ProfileLayout() {
 
         setUser(response.data);
       } catch (error) {
-        console.error("Ошибка при получении данных о пользователе:", error);
+        router.push("/");
         // Можно обработать ошибку здесь или пробросить её для обработки в вызывающем коде
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -38,6 +44,7 @@ export default function ProfileLayout() {
 
   return (
     <>
+      {isLoading && <Loader />}
       {user.role?.type === "client" ? (
         <ClientPage user={user} />
       ) : user.role?.type === "partner" ? (

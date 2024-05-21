@@ -4,7 +4,9 @@ const URL = process.env.API_URL;
 export default async function getPage(slug, populate) {
   try {
     const response = await fetch(
-      `${URL}/api/${slug}?populate=${populate || "deep"}&pagination[pageSize]=2000`,
+      `${URL}/api/${slug}?pagination[page]=1&pagination[pageSize]=250&populate=${
+        populate || "deep"
+      }`,
       {
         method: "GET",
         next: { revalidate: 10 },
