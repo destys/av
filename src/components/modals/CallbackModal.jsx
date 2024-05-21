@@ -1,14 +1,25 @@
-import { useState } from "react";
+"use client";
 
-import Modal from "./Modal";
-import Button from "@/components/ui/button/Button";
-import Select from "../ui/select/Select";
-import Input from "../ui/input/Input";
+import { useEffect, useState } from "react";
+
+import getPage from "@/actions/GetPage";
+import getData from "@/actions/GetData";
 
 import useSuccessModal from "@/hooks/useSuccessModal";
 import useCallbackModal from "@/hooks/useCallbackModal";
 
+import Select from "@/components/ui/select/Select";
+import Input from "@/components/ui/input/Input";
+import Button from "@/components/ui/button/Button";
+
+import Modal from "./Modal";
+import EntryModel from "../intro/EntryModel";
+
 export default function CallbackModal() {
+  const [brands, setBrands] = useState(null);
+  const [services, setServices] = useState(null);
+  console.log("services: ", services);
+
   const { onClose, isOpen } = useCallbackModal();
   const [currentStep, setCurrentStep] = useState(0);
   const [serviceDescription, setServiceDescription] = useState("");
@@ -52,41 +63,6 @@ export default function CallbackModal() {
     },
   ];
 
-  const options = [
-    { label: "Audi", value: "Audi" },
-    { label: "BMW", value: "BMW" },
-    { label: "Volkswagen", value: "volkswagen" },
-  ];
-
-  const options2 = [
-    { label: "Model 1", value: "model_1" },
-    { label: "Model 2", value: "model_2" },
-    { label: "Model 3", value: "model_3" },
-  ];
-
-  const options3 = [
-    {
-      label: "Отключить сигнализацию",
-      value: "model",
-      description:
-        "Lorem ipsum dolor sit,  architecto eveniet earum fugit aspernatur quasi exercitationem porro iure in eaque doloribus doloremque. Sapiente eaque non laborum assumenda!",
-    },
-    {
-      label: "Завести машину",
-      value: "model22",
-      description:
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit.  Sapiente eaque non laborum assumenda!",
-    },
-    {
-      label: "Эвакуатор",
-      value: "model33",
-      description:
-        "Vitae beatae consequuntur est, architecto eveniet earum fugit aspernatur quasi exercitationem porro iure in eaque doloribus doloremque. Sapiente eaque non laborum assumenda!",
-    },
-  ];
-
-  const handleSelect = (selectedOption) => {};
-
   const handleSelectService = (selectedOption) => {
     setServiceDescription(selectedOption.description);
   };
@@ -102,6 +78,47 @@ export default function CallbackModal() {
     successModal.onOpen();
     e.preventDefault();
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getPage("car-brands");
+
+        setBrands(response);
+      } catch (error) {
+        console.log("error: ", error);
+        // Можно обработать ошибку здесь или пробросить её для обработки в вызывающем коде
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getData(
+          "services-main?pagination[pageSize]=2000"
+        );
+
+        const options = response.map((service) => {
+          const { title, intro, slug } = service.attributes;
+          return {
+            label: title,
+            value: slug,
+            description: intro ? intro.description : "",
+          };
+        });
+
+        setServices(options);
+      } catch (error) {
+        console.log("error: ", error);
+        // Можно обработать ошибку здесь или пробросить её для обработки в вызывающем коде
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Modal
@@ -157,24 +174,11 @@ export default function CallbackModal() {
               ))}
             </div>
           </div>
-          <div className="col-span-2">
-            <h5 className="mb-4 font-medium text-[32px]">Марка</h5>
-            <Select
-              options={options}
-              onSelect={handleSelect}
-              placeholder={"Выберите марку"}
-            />
+          <div>
+            <EntryModel brands={brands} hideLink={true} />
           </div>
           <div className="mb-space-large">
-            <h5 className="mb-4 font-medium text-[32px]">Модель</h5>
-            <Select
-              options={options2}
-              onSelect={handleSelect}
-              placeholder={"Выберите модель"}
-            />
-          </div>
-          <div className="mb-space-large">
-            <h5 className="mb-4 font-medium text-[32px]">Год</h5>
+            <h5 className="mb-4 sm:mb-5">Год</h5>
             <Input placeholder={"Укажите год"} />
           </div>
           <div className="col-span-2">
@@ -193,7 +197,7 @@ export default function CallbackModal() {
           <div className=" mb-space-large">
             <h5 className="mb-4 font-medium text-[32px]">Услуга</h5>
             <Select
-              options={options3}
+              options={services}
               onSelect={handleSelectService}
               placeholder={"Выберите услугу"}
             />

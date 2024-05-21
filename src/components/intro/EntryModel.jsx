@@ -5,7 +5,8 @@ import Link from "next/link";
 import Select from "../ui/select/Select";
 import Button from "../ui/button/Button";
 
-export default function EntryModel({ params, brands }) {
+export default function EntryModel({ params, brands, hideLink }) {
+  console.log("brands: ", brands);
   const [link, setLink] = useState("");
   const [brandSlug, setBrandSlug] = useState("");
   const [selectedBrand, setSelectedBrand] = useState([]);
@@ -48,7 +49,7 @@ export default function EntryModel({ params, brands }) {
           placeholder={"Выберите модель"}
         />
 
-        {link && (
+        {link && !hideLink && (
           <Link
             href={`${
               params ? params.services + "/" + link : "catalog/" + link

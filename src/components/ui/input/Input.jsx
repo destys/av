@@ -22,7 +22,7 @@ export default function Input({
       )}
       <div
         className={twMerge(
-          "flex items-center gap-5 px-large py-medium bg-white flex-auto rounded-x-large",
+          "flex items-center gap-5 py-1.5 px-4 xs:py-2.5 xs:px-5 xl:py-medium xl:px-large border-[2px] border-white bg-white flex-auto rounded-x-large",
           className
         )}
       >
@@ -33,7 +33,7 @@ export default function Input({
         {type === "tel" ? (
           <ReactInputMask
             mask={mask || "+7 (999) 999-99-99"}
-            className="w-full text-2xl bg-white leading-none"
+            className="w-full xl:text-2xl bg-white leading-none"
             placeholder={placeholder || "+7 (999) 000-00-00"}
           />
         ) : (
@@ -41,7 +41,7 @@ export default function Input({
             type={type}
             placeholder={placeholder}
             {...props}
-            className="w-full text-2xl leading-none"
+            className="w-full xl:text-2xl leading-none"
           />
         )}
 

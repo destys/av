@@ -1,11 +1,15 @@
-"use client";
-import Link from "next/link";
-import styles from "./Footer.module.scss";
-import Logotype from "@/components/ui/logotype/Logotype";
-import Button from "@/components/ui/button/Button";
 import Menu from "@/components/menu/Menu";
+import getMenu from "@/actions/GetMenu";
 
-export default function Footer() {
+import styles from "./Footer.module.scss";
+import FooterTop from "./components/FooterTop";
+
+export default async function Footer() {
+  const menuCol1 = await getMenu("menu-footer-col-1");
+  const menuCol2 = await getMenu("menu-footer-col-2");
+  const menuCol3 = await getMenu("menu-footer-col-3");
+  const menuCol4 = await getMenu("menu-footer-col-4");
+
   const currentYear = new Date().getFullYear();
   const menuItems = [
     { id: 1, title: "Ремонт AUDI" },
@@ -25,22 +29,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className="container xl:px-large">
-        <div className={styles.top}>
-          <Logotype />
-          <Link
-            href={"tel:+74950002040"}
-            className="hidden xl:block xl:flex-auto xl:font-semibold xl:text-[40px] xl:text-lynch-800 xl:text-right xl:whitespace-nowrap"
-          >
-            +7 495 000 20 40
-          </Link>
-          <Button
-            style={"filled"}
-            onClick={() => alert("Callback")}
-            className={"hidden md:flex"}
-          >
-            Оставить заявку
-          </Button>
-        </div>
+        <FooterTop />
         <div className={styles.menus}>
           <div className="hidden 2xl:block">
             <p className="2xl:text-lynch-300 2xl:leading-none">
@@ -49,21 +38,28 @@ export default function Footer() {
               запасных частей.
             </p>
           </div>
-          <Menu
-            title={"О сервисе"}
-            items={menuItems}
-            menuItemClassList={"mb-medium max-md:hidden"}
-          />
-          <Menu
-            title={"Автоуслуги"}
-            items={menuItems}
-            menuItemClassList={"mb-medium max-md:hidden"}
-          />
-          <Menu
-            title={"Полезное"}
-            items={menuItems}
-            menuItemClassList={"mb-medium max-md:hidden"}
-          />
+          {menuCol1 && (
+            <Menu
+              title={menuCol1.menu_title}
+              items={menuCol1.menu_item}
+              menuItemClassList={"mb-medium max-md:hidden"}
+            />
+          )}
+
+          {menuCol2 && (
+            <Menu
+              title={menuCol2.menu_title}
+              items={menuCol2.menu_item}
+              menuItemClassList={"mb-medium max-md:hidden"}
+            />
+          )}
+          {menuCol3 && (
+            <Menu
+              title={menuCol3.menu_title}
+              items={menuCol3.menu_item}
+              menuItemClassList={"mb-medium max-md:hidden"}
+            />
+          )}
         </div>
         <div className={styles.bottom}>
           <p className="mb-2.5 sm:mb-0">© {currentYear} «АВТОПОМОЩЬ»</p>

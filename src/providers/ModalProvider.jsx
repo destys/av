@@ -6,10 +6,11 @@ import AuthModal from "@/components/modals/AuthModal";
 import RegistrationModal from "@/components/modals/RegistrationModal";
 import CallbackModal from "@/components/modals/CallbackModal";
 import SuccessModal from "@/components/modals/SuccessModal";
+import ResetModal from "@/components/modals/ResetModal";
 
 const revalidate = 0;
 
-const ModalProvider = ({ products }) => {
+const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -26,6 +27,7 @@ const ModalProvider = ({ products }) => {
       <RegistrationModal />
       <CallbackModal />
       <SuccessModal />
+      <ResetModal />
     </>
   );
 };

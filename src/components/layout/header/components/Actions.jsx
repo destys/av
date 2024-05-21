@@ -13,7 +13,7 @@ import styles from "../Header.module.scss";
 export default function Actions() {
   const authModal = useAuthModal();
   const registrationModal = useRegistrationModal();
-  const { jwtToken, login, logout } = useAuthStore();
+  const { jwtToken, logout } = useAuthStore();
   const [user, setUser] = useState({});
 
   useEffect(() => {

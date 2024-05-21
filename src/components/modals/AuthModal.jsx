@@ -1,20 +1,24 @@
 "use client";
 
+import axios from "axios";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import axios from "axios";
+import useAuthModal from "@/hooks/useAuthModal";
+import useAuthStore from "@/hooks/useAuthStore";
+import useResetModal from "@/hooks/useResetModal";
 
 import Modal from "./Modal";
 import Input from "@/components/ui/input/Input";
 import Button from "@/components/ui/button/Button";
 
-import useAuthModal from "@/hooks/useAuthModal";
-import useAuthStore from "@/hooks/useAuthStore";
-import { useState } from "react";
-
 export default function AuthModal() {
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const { onClose, isOpen } = useAuthModal();
+
+  const resetModal = useResetModal();
+
   const { login } = useAuthStore();
 
   const router = useRouter();
@@ -26,6 +30,7 @@ export default function AuthModal() {
   };
 
   const onSubmit = async (e) => {
+    setMessage("");
     e.preventDefault();
 
     axios
@@ -44,11 +49,17 @@ export default function AuthModal() {
         // Handle error.
         console.error("An error occurred:", error.response);
         setIsLoading(false);
+        setMessage(error.response.data.error.message);
       });
   };
 
+  const handleResetPassword = () => {
+    resetModal.onOpen();
+    onClose();
+  };
+
   return (
-    <Modal title={"Авторизоваться"} isOpen={isOpen} onChange={onChange}>
+    <Modal title={"Авторизация"} isOpen={isOpen} onChange={onChange}>
       <form action="#" onSubmit={onSubmit}>
         <Input
           name="email"
@@ -64,6 +75,7 @@ export default function AuthModal() {
           placeholder={"***************"}
           className="mb-space-large"
         />
+        {message && <p className="-mt-6 mb-6 text-red-600">{message}</p>}
         <Button
           type="submit"
           style={"filled-full"}
@@ -72,7 +84,13 @@ export default function AuthModal() {
         >
           {isLoading ? "Загрузка" : "Войти"}
         </Button>
-        <Button style={"outlined-full"}>Восстановить пароль</Button>
+        <Button
+          style={"outlined-full"}
+          type="button"
+          onClick={handleResetPassword}
+        >
+          Восстановить пароль
+        </Button>
       </form>
     </Modal>
   );

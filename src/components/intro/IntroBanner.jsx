@@ -29,7 +29,7 @@ export default async function IntroBanner({ data, params }) {
             <h1 className="mb-5">{data?.h1}</h1>
             <p>{data?.description}</p>
           </div>
-          <div className={styles.entry}>
+          <div className={styles.entry}> 
             <EntryModel brands={brands} params={params} />
           </div>
         </div>
