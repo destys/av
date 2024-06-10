@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import styles from "./Select.module.scss";
 import { twMerge } from "tailwind-merge";
+import Icon from "../icon/Icon";
 
 const Select = ({ options, onSelect, placeholder, selectClassNames, id }) => {
   const [selectedOption, setSelectedOption] = useState(null);
@@ -35,6 +36,12 @@ const Select = ({ options, onSelect, placeholder, selectClassNames, id }) => {
           </option>
         ))}
       </select>
+      <Icon
+        name="arrow-down"
+        color="fill-navy"
+        className="absolute top-[50%] right-9 -translate-y-1/2"
+        size={36}
+      />
     </div>
   );
 };

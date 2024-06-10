@@ -4,13 +4,11 @@ import ProfileIntro from "./components/profile-intro/ProfileIntro";
 export default function ClientPage({ user }) {
   return (
     <div>
-      <div className="container">
-        <ProfileIntro
-          name={user.name || "Имя не задано"}
-          phone={user.phone || "Телефон не задан"}
-        />
-        <OrdersList />
-      </div>
+      <ProfileIntro
+        name={user.name || "Имя не задано"}
+        phone={user.phone || "Телефон не задан"}
+      />
+      <OrdersList />
     </div>
   );
 }

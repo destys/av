@@ -6,7 +6,6 @@ import Select from "../ui/select/Select";
 import Button from "../ui/button/Button";
 
 export default function EntryModel({ params, brands, hideLink }) {
-  console.log("brands: ", brands);
   const [link, setLink] = useState("");
   const [brandSlug, setBrandSlug] = useState("");
   const [selectedBrand, setSelectedBrand] = useState([]);

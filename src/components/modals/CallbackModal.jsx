@@ -18,7 +18,6 @@ import EntryModel from "../intro/EntryModel";
 export default function CallbackModal() {
   const [brands, setBrands] = useState(null);
   const [services, setServices] = useState(null);
-  console.log("services: ", services);
 
   const { onClose, isOpen } = useCallbackModal();
   const [currentStep, setCurrentStep] = useState(0);
@@ -86,7 +85,7 @@ export default function CallbackModal() {
 
         setBrands(response);
       } catch (error) {
-        console.log("error: ", error);
+        console.error("error: ", error);
         // Можно обработать ошибку здесь или пробросить её для обработки в вызывающем коде
       }
     };
@@ -112,7 +111,7 @@ export default function CallbackModal() {
 
         setServices(options);
       } catch (error) {
-        console.log("error: ", error);
+        console.error("error: ", error);
         // Можно обработать ошибку здесь или пробросить её для обработки в вызывающем коде
       }
     };

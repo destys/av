@@ -33,7 +33,6 @@ export default function ResetModal() {
         email: e.target.elements.email.value,
       })
       .then((response) => {
-        console.log("response: ", response);
         onChange();
       })
       .catch((error) => {
