@@ -7,6 +7,8 @@ import RegistrationModal from "@/components/modals/RegistrationModal";
 import CallbackModal from "@/components/modals/CallbackModal";
 import SuccessModal from "@/components/modals/SuccessModal";
 import ResetModal from "@/components/modals/ResetModal";
+import OrderDetailsModal from "@/components/modals/OrderDetailsModal";
+import OrderProcessedModal from "@/components/modals/OrderProcessedModal";
 
 const revalidate = 0;
 
@@ -28,6 +30,8 @@ const ModalProvider = () => {
       <CallbackModal />
       <SuccessModal />
       <ResetModal />
+      <OrderDetailsModal />
+      <OrderProcessedModal />
     </>
   );
 };

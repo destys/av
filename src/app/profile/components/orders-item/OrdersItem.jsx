@@ -4,8 +4,10 @@ import Icon from "@/components/ui/icon/Icon";
 import { twMerge } from "tailwind-merge";
 
 import styles from "./OrdersItem.module.scss";
+import useOrderDetailsModal from "@/hooks/useOrderDetailsModal";
 
 export default function OrdersItem({ order }) {
+  const { onOpen } = useOrderDetailsModal();
   const nowDate = new Date();
   const orderDateParts = order.date.split(".");
   const orderDate = new Date(
@@ -60,6 +62,7 @@ export default function OrdersItem({ order }) {
         icon={"arrow-link"}
         className="w-full lg:w-auto"
         iconClassName={"max-xs:max-w-6 max-xs:max-h-6"}
+        onClick={onOpen}
       >
         Подробнее
       </Button>

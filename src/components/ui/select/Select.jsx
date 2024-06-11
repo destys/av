@@ -30,7 +30,7 @@ const Select = ({ options, onSelect, placeholder, selectClassNames, id }) => {
             {placeholder}
           </option>
         )}
-        {options.map((option) => (
+        {options?.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -39,7 +39,7 @@ const Select = ({ options, onSelect, placeholder, selectClassNames, id }) => {
       <Icon
         name="arrow-down"
         color="fill-navy"
-        className="absolute top-[50%] right-9 -translate-y-1/2"
+        className="absolute top-[50%] right-3 -translate-y-1/2"
         size={36}
       />
     </div>

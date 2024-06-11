@@ -22,7 +22,7 @@ export default function Input({
       )}
       <div
         className={twMerge(
-          "flex items-center gap-5 py-1.5 px-4 xs:py-2.5 xs:px-5 xl:py-medium xl:px-large border-[2px] border-white bg-white flex-auto rounded-x-large",
+          "flex items-center gap-5 py-3 px-4 xs:py-2.5 xs:px-5 xl:py-medium xl:px-large border-[2px] border-white bg-white flex-auto rounded-x-large",
           className
         )}
       >

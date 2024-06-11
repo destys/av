@@ -18,7 +18,9 @@ export default function Button({
   return (
     <button
       className={twMerge(
-        "flex justify-between md:justify-center items-center gap-5 py-3 md:py-4 lg:py-[18px] px-5 rounded-large border-2 border-navy font-semibold  whitespace-nowrap transition text-sm md:text-lg xl:text-2xl",
+        `flex justify-center items-center gap-5 py-3 md:py-4 lg:py-[18px] px-5 rounded-large border-2 border-navy font-semibold  whitespace-nowrap transition text-sm md:text-lg xl:text-2xl ${
+          icon && "justify-between md:justify-center"
+        }`,
         typeClasses,
         className
       )}
