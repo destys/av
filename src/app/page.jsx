@@ -8,6 +8,7 @@ import TextBlock from "@/components/text-block/TextBlock";
 
 import getPage from "@/actions/GetPage";
 import getData from "@/actions/GetData";
+import Button from "@/components/ui/button/Button";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const page = await getPage("main-page");

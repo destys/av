@@ -26,6 +26,10 @@ export default function AuthModal() {
   const onChange = (open) => {
     if (!open) {
       onClose();
+
+      if (window.location.pathname === "/profile") {
+        router.push("/");
+      }
     }
   };
 

@@ -126,12 +126,12 @@ export default function CallbackModal() {
       onChange={onChange}
       contentClassNames={"max-w-[1024px]"}
     >
-      <form action="#" onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <div className="grid grid-cols-3 gap-2.5 mb-space-large">
           {steps.map((step) => (
             <div key={step.id}>
               <p
-                className={`flex items-center mb-4 h-8 text-lynch text-2xl transition-all ${
+                className={`hidden xs:flex items-center mb-4 h-8 text-lynch text-2xl transition-all ${
                   currentStep === step.id &&
                   "font-semibold text-3xl !text-black"
                 }`}
@@ -153,7 +153,9 @@ export default function CallbackModal() {
           }
         >
           <div className="mb-space-large col-span-2">
-            <h5 className="mb-4 font-medium text-[32px]">Тип авто</h5>
+            <h5 className="mb-4 font-medium text-sm lg:text-2xl xl:text-[32px]">
+              Тип авто
+            </h5>
             <div className="flex flex-wrap gap-4">
               {typeOfCar.map((type) => (
                 <div key={type.id}>

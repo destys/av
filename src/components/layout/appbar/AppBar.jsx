@@ -17,7 +17,7 @@ export default function AppBar() {
       id: 1,
       title: "Заявки",
       icon: "prder-list",
-      link: "/profile/client",
+      link: "/profile",
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ export default function AppBar() {
     },
   ];
   return (
-    <nav className="fixed left-0 bottom-0 w-full h-[75px] bg-navy-100 flex md:hidden items-center p-4">
+    <nav className="fixed left-0 bottom-0 z-50 w-full h-[75px] bg-navy-100 flex md:hidden items-center p-4">
       <ul className="flex justify-between w-full">
         {navigation.map((item) => (
           <li

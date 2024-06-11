@@ -5,8 +5,10 @@ import Logotype from "@/components/ui/logotype/Logotype";
 import Button from "@/components/ui/button/Button";
 
 import styles from "../Footer.module.scss";
+import useCallbackModal from "@/hooks/useCallbackModal";
 
 export default function FooterTop() {
+  const { onOpen } = useCallbackModal();
   return (
     <div className={styles.top}>
       <Logotype />
@@ -16,11 +18,7 @@ export default function FooterTop() {
       >
         +7 495 000 20 40
       </Link>
-      <Button
-        style={"filled"}
-        onClick={() => alert("Callback")}
-        className={"hidden md:flex"}
-      >
+      <Button style={"filled"} className={"hidden md:flex"} onClick={onOpen}>
         Оставить заявку
       </Button>
     </div>

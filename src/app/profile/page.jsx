@@ -8,12 +8,14 @@ import ClientPage from "./components/client/ClientPage";
 import PartnerPage from "./components/partner/PartnerPage";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/ui/loader/Loader";
+import useAuthModal from "@/hooks/useAuthModal";
 
 export default function ProfileLayout() {
   const [isLoading, setIsLoading] = useState(true);
   const { jwtToken } = useAuthStore();
   const [user, setUser] = useState({});
   const router = useRouter();
+  const { onOpen } = useAuthModal();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,16 +32,17 @@ export default function ProfileLayout() {
 
         setUser(response.data);
       } catch (error) {
-        router.push("/");
-        // Можно обработать ошибку здесь или пробросить её для обработки в вызывающем коде
+        onOpen();
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData(); // Вызываем функцию для выполнения запроса при монтировании компонента
-
-    // Указываем зависимость, чтобы useEffect запускался снова при изменении jwtToken
+    if (jwtToken !== null) {
+      fetchData();
+    } else {
+      onOpen();
+    }
   }, [jwtToken]);
 
   return (

@@ -35,7 +35,9 @@ export default function Actions() {
       }
     };
 
-    fetchData();
+    if (jwtToken !== null) {
+      fetchData();
+    }
   }, [jwtToken]);
 
   const handleLogut = () => {
