@@ -19,6 +19,7 @@ const OrderDetailsModal = () => {
     onClose();
     onOpen();
   };
+  
 
   return (
     <OrderModalWrapper isOpen={isOpen} onChange={onChange}>
