@@ -18,8 +18,8 @@ export default function Button({
   return (
     <button
       className={twMerge(
-        `flex justify-center items-center gap-5 py-3 md:py-4 lg:py-[18px] px-5 rounded-large border-2 border-navy font-semibold  whitespace-nowrap transition text-sm md:text-lg xl:text-2xl ${
-          icon && "justify-between md:justify-center"
+        `flex justify-center items-center gap-5 py-3 md:py-4 px-5 md:px-7 rounded-large border-2 border-navy font-semibold  whitespace-nowrap transition text-sm md:text-[20px] ${
+          icon && "justify-between"
         }`,
         typeClasses,
         className
@@ -30,7 +30,7 @@ export default function Button({
       {icon && (
         <Icon
           name={icon}
-          size={36}
+          size={24}
           color={getIconColor(style)}
           className={twMerge(
             "max-w-[18px] max-h-[18px] md:max-w-6 md:max-h-6 lg:max-w-none lg:max-h-none",

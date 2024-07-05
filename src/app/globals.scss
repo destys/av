@@ -36,9 +36,31 @@ h4 {
 }
 
 h5 {
-  @apply font-medium text-lg lg:text-xl xl:text-2xl 2xl:text-3xl;
+  @apply font-medium text-lg lg:text-xl xl:text-[28px] ;
 }
 
 .container {
   @apply mx-auto max-w-[1850px];
+}
+
+/* width */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+  background: #64798d;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: #64798d !important;
 }

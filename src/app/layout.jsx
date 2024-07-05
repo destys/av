@@ -3,7 +3,10 @@ import { Toaster } from "react-hot-toast";
 
 import LayoutClient from "@/components/layout/Layout";
 
-const golos = Golos_Text({ subsets: ["latin"] });
+const golos = Golos_Text({
+  subsets: ["cyrillic", "latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 import ModalProvider from "@/providers/ModalProvider";
 

@@ -6,8 +6,8 @@ export default function Logotype({ width, height, src, className }) {
     <Link href={"/"} className={className}>
       <Image
         src={src || "/logo.svg"}
-        width={width || 523}
-        height={height || 56}
+        width={width || 466}
+        height={height || 50}
         alt="logotype"
         className="max-w-[234px] md:max-w-[360px] xl:max-w-none"
       />

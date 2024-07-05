@@ -15,9 +15,14 @@ export default async function CarPage({ params }) {
   const regexpServices = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}?").exec(
     `/${params.services}`
   );
-  const regexpCar = pathToRegexp("/:attr1?{_:attr2}?").exec(`/${params.car}`);
+  const regexpCar = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}").exec(
+    `/${params.car}`
+  );
 
   const getCarQuery = () => {
+    if (regexpCar[3]) {
+      return `car-generations?populate=deep&filters[slug][$eq]=${regexpCar[3]}`;
+    }
     if (regexpCar[2]) {
       return `car-models?populate=deep&filters[slug][$eq]=${regexpCar[2]}`;
     }
@@ -58,11 +63,14 @@ export default async function CarPage({ params }) {
   const pageService = await getServicesMain(getServiceQuery());
 
   const serviceTitle = pageService[0]?.attributes?.intro.h1 || "";
+
   const currentTitle =
     pageCar[0]?.attributes.intro?.h1 || pageCar[0]?.attributes.title;
+
   const carBrandTitle =
     pageCar[0].attributes.car_brand?.data.attributes.intro?.h1 ||
     pageCar[0].attributes.car_brand?.data.attributes.title;
+
 
   const pageTitle = `${serviceTitle || ""} ${
     carBrandTitle || ""
