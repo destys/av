@@ -30,7 +30,7 @@ export default async function Home() {
       <IntroBanner data={page.attributes.intro} />
       <Search />
       <Services data={services} />
-      <OurService />
+      <OurService /> 
       <Calculate />
       <FAQ />
       <TextBlock content={page.attributes.text_blocks} />

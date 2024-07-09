@@ -8,9 +8,9 @@ export default function FAQItem({ item }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="mb-3.5 cursor-pointer" onClick={() => setOpen(!open)}>
-      <div className="flex items-center py-2.5 px-[15px] md:py-[15px] md:px-large xl:py-5 bg-white rounded-2xl xs:rounded-large">
+      <div className="flex items-center py-2.5 px-[15px] md:py-[15px] md:px-large xl:py-4 bg-white rounded-2xl xs:rounded-large">
         <h4 className="flex-auto">{item.question}</h4>
-        <div className="flex-0 py-1.5 px-2.5 md:py-2.5 md:px-5 xl:py-4 xl:px-9 xl:basis-[120px] bg-navy-100 rounded-large xl:rounded-x-large ">
+        <div className="flex-0 py-1.5 px-2.5 md:py-2.5 md:px-5 xl:py-2 xl:px-7 xl:basis-[11px] bg-navy-100 rounded-large xl:rounded-x-large ">
           <Icon
             name={"arrow-left"}
             size={48}

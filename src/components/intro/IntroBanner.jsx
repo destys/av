@@ -9,7 +9,7 @@ import getPage from "@/actions/GetPage";
 
 export default async function IntroBanner({ data, params }) {
   const brands = await getPage("car-brands");
-  
+
   return (
     <section className={styles.intro}>
       <div className="container grid grid-cols-2 gap-5 sm:gap-space-large xl:flex ">
@@ -29,22 +29,22 @@ export default async function IntroBanner({ data, params }) {
             <h1 className="mb-5">{data?.h1}</h1>
             <p>{data?.description}</p>
           </div>
-          <div className={styles.entry}> 
+          <div className={styles.entry}>
             <EntryModel brands={brands} params={params} />
           </div>
         </div>
         <div className={styles.right}>
           <button className="flex md:flex-col justify-between order-2 sm:order-1 relative px-3 sm:px-large py-5 md:p-large w-full bg-sapphire md:h-[265px] rounded-2xl xs:rounded-large text-left overflow-hidden">
             <Image
-              src={"/banner/join-telegram-group.png"}
-              width={195}
-              height={265}
-              alt="join-telegram-group"
-              className="hidden md:block md:absolute md:bottom-0 md:right-[-30px] md:z-10"
+              src={"/banner/electrical-help.png"}
+              width={337}
+              height={261}
+              alt="electrical-help"
+              className="hidden md:block md:absolute md:bottom-0 md:right-0 md:z-10 h-full"
             />
             <h4 className="text-white tracking-little">
-              Присоединяйся <br />
-              как исполнитель
+              Помощь <br />
+              автоэлектрирка 
             </h4>
             <Icon
               name={"arrow-link"}

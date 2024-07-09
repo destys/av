@@ -12,12 +12,14 @@ import TextBlock from "@/components/text-block/TextBlock";
 import FAQ from "@/components/faq/FAQ";
 
 export default async function CarPage({ params }) {
+  console.log("params: ", params);
   const regexpServices = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}?").exec(
     `/${params.services}`
   );
-  const regexpCar = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}").exec(
+  const regexpCar = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}?").exec(
     `/${params.car}`
   );
+  console.log("regexpCar: ", regexpCar);
 
   const getCarQuery = () => {
     if (regexpCar[3]) {
@@ -56,25 +58,32 @@ export default async function CarPage({ params }) {
   };
 
   const pageCar = await getServicesMain(getCarQuery());
+  console.log("pageCar: ", pageCar);
   if (!pageCar.length) {
     return null;
   }
 
   const pageService = await getServicesMain(getServiceQuery());
 
-  const serviceTitle = pageService[0]?.attributes?.intro.h1 || "";
+  const serviceTitle =
+    pageService[0]?.attributes?.intro?.h1 ||
+    pageService[0]?.attributes?.title ||
+    "";
 
-  const currentTitle =
-    pageCar[0]?.attributes.intro?.h1 || pageCar[0]?.attributes.title;
+  const carTitle = pageCar[0]?.attributes.car_model?.data
+    ? pageCar[0]?.attributes.car_model?.data.attributes.car_brand.data
+        .attributes.title +
+      " " +
+      pageCar[0]?.attributes.car_model.data.attributes.intro.h1 +
+      " " +
+      pageCar[0]?.attributes.intro.h1
+    : pageCar[0]?.attributes.car_brand?.data
+    ? pageCar[0]?.attributes.car_brand?.data.attributes.intro.h1 +
+      " " +
+      pageCar[0]?.attributes.intro.h1
+    : pageCar[0]?.attributes.intro.h1;
 
-  const carBrandTitle =
-    pageCar[0].attributes.car_brand?.data.attributes.intro?.h1 ||
-    pageCar[0].attributes.car_brand?.data.attributes.title;
-
-
-  const pageTitle = `${serviceTitle || ""} ${
-    carBrandTitle || ""
-  }  ${currentTitle}`;
+  const pageTitle = `${serviceTitle || ""} ${carTitle || ""}`;
 
   return (
     <>

@@ -1,3 +1,15 @@
 .search {
     @apply hidden md:block md:mb-x-large;
 }
+
+.results {
+    @apply absolute top-[110%] right-0 w-full bg-white p-4 xs:p-5 rounded-[10px] shadow grid;
+}
+
+.item {
+    @apply p-2 hover:bg-navy-100 text-[22px];
+
+    span {
+        @apply text-lynch-300;
+    }
+}
