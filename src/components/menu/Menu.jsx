@@ -13,12 +13,11 @@ export default function Menu({
   return (
     <div className={containerClassList}>
       {title && (
-        <div className="flex justify-between md:justify-start items-center gap-5 md:mb-4 py-2.5 px-medium md:p-0 rounded-x-large md:rounded-none bg-white bg-opacity-10 md:bg-transparent font-mediun text-lg md:text-[32px]">
-          <p>{title}</p>
-          <IconButton type={"filled"} icon={"arrow-link"} />
-        </div>
+        <h3 className="flex justify-between md:justify-end items-center gap-5 md:mb-4 py-2.5 px-medium md:p-0 rounded-x-large md:rounded-none bg-white bg-opacity-10 md:bg-transparent text-right">
+          {title}
+        </h3>
       )}
-      <ul className={twMerge("", menuClassList)}>
+      <ul className={twMerge("text-right", menuClassList)}>
         {items.map((item) => (
           <li key={item.id} className={`${menuItemClassList} hover:text-navy`}>
             <Link href="#" className="underline">

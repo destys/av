@@ -44,7 +44,7 @@ export default async function IntroBanner({ data, params }) {
             />
             <h4 className="text-white tracking-little">
               Помощь <br />
-              автоэлектрирка 
+              автоэлектрирка
             </h4>
             <Icon
               name={"arrow-link"}
@@ -53,7 +53,26 @@ export default async function IntroBanner({ data, params }) {
               className={"max-w-6 md:max-w-none"}
             />
           </button>
-          <IntroCallback />
+          <button className="flex md:flex-col justify-between order-2 sm:order-1 relative px-3 sm:px-large py-5 md:p-large w-full bg-lynch-100 md:h-[265px] rounded-2xl xs:rounded-large text-left overflow-hidden">
+            <Image
+              src={"/banner/tow-image.png"}
+              width={586}
+              height={247}
+              alt="tow-image"
+              className="hidden md:block md:absolute md:bottom-0 md:right-0 md:z-10 h-full"
+            />
+            <h4 className="text-sapphire tracking-little">
+              Вызов <br />
+              эвакуатора
+            </h4>
+            <Icon
+              name={"arrow-link"}
+              color="fill-sapphire"
+              size={48}
+              className={"max-w-6 md:max-w-none"}
+            />
+          </button>
+          {/* <IntroCallback /> */}
         </div>
       </div>
     </section>

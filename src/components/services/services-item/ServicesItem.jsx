@@ -22,15 +22,15 @@ export default function ServicesItem({ params, item, isPage }) {
         {item.attributes.title}
       </h5>
       <div className="flex justify-between items-end w-full">
-        <Icon name={"arrow-link"} size={36} color={"fill-lynch-300"} />
-        <div className="w-[72px] h-[72px] basis-[72px]">
+        <Icon name={"arrow-link"} size={36} color={"fill-lynch-300"} className="max-md:max-w-7 max-md:max-h-7" />
+        <div className="flex justify-end items-end w-12 h-12 basis-[48px] md:w-[72px] md:h-[72px] md:basis-[72px]">
           {item.attributes.icon.data && (
             <Image
               src={`${process.env.API_URL}${item.attributes.icon?.data.attributes.url}`}
               width={72}
               height={72}
               alt={item.attributes.title}
-              className="max-w-12 md:max-w-[82px] xl:max-w-none"
+              className="max-w-12 md:max-w-[72px] xl:max-w-none"
             />
           )}
         </div>

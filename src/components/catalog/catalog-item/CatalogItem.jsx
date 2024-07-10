@@ -15,7 +15,7 @@ export default function CatalogItem({ item }) {
         onClick={() => setOpen(!open)}
       >
         <Image
-          src={`${process.env.API_URL}${item.attributes.icon?.data.attributes.url}`}
+          src={`${process.env.API_URL}/${item.attributes.icon?.data?.attributes?.url}`}
           width={64}
           height={64}
           alt={item.title}

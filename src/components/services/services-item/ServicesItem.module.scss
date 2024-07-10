@@ -1,5 +1,5 @@
 .primary {
-    @apply flex flex-col gap-5 p-[15px] p-7 rounded-xl xs:rounded-large bg-white border border-transparent hover:bg-navy-100 hover:border-navy;
+    @apply flex flex-col gap-5 p-[15px] lg:p-7 rounded-xl xs:rounded-large bg-white border border-transparent hover:bg-navy-100 hover:border-navy;
 
     &.servicesPage {
         @apply flex max-xs:flex-row max-xs:justify-between gap-5 justify-between items-center p-[15px] md:py-large md:px-5 xl:px-6 xl:py-9 rounded-2xl xs:rounded-large bg-white border border-transparent text-xs hover:bg-navy-100 hover:border-navy;

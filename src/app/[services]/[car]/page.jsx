@@ -1,6 +1,7 @@
 import { pathToRegexp } from "path-to-regexp";
 
-import getServicesMain from "@/actions/GetData";
+import getData from "@/actions/GetData";
+import { getServicesQuery, getCarQuery } from "@/utils/getQueryUtils";
 
 import IntroSmall from "@/components/intro-small/IntroSmall";
 import Models from "@/components/models/Models";
@@ -10,60 +11,34 @@ import Calculate from "@/components/calculate/Calculate";
 import Services from "@/components/services/Services";
 import TextBlock from "@/components/text-block/TextBlock";
 import FAQ from "@/components/faq/FAQ";
+import NotFoundPage from "@/app/not-found";
 
-export default async function CarPage({ params }) {
-  console.log("params: ", params);
-  const regexpServices = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}?").exec(
-    `/${params.services}`
-  );
-  const regexpCar = pathToRegexp("/:attr1?{_:attr2}?{_:attr3}?").exec(
-    `/${params.car}`
-  );
-  console.log("regexpCar: ", regexpCar);
+export async function generateMetadata({ params }) {
+  const query = getCarQuery(params.car);
+  const page = await getData(query);
 
-  const getCarQuery = () => {
-    if (regexpCar[3]) {
-      return `car-generations?populate=deep&filters[slug][$eq]=${regexpCar[3]}`;
-    }
-    if (regexpCar[2]) {
-      return `car-models?populate=deep&filters[slug][$eq]=${regexpCar[2]}`;
-    }
-    if (regexpCar[1]) {
-      return `car-brands?populate=deep&filters[slug][$eq]=${regexpCar[1]}`;
-    }
-
-    return null;
-  };
-
-  const getServiceQuery = () => {
-    const queries = {
-      1: `services-main`,
-      2: `service-types`,
-      3: `services-sub`,
-    };
-
-    if (regexpServices[3]) {
-      return `${queries[3]}?populate=deep&filters[slug][$eq]=${regexpServices[3]}`;
-    }
-
-    if (regexpServices[2]) {
-      return `${queries[2]}?populate=deep&filters[slug][$eq]=${regexpServices[2]}`;
-    }
-
-    if (regexpServices[1]) {
-      return `${queries[1]}?populate=deep&filters[slug][$eq]=${regexpServices[1]}`;
-    }
-
-    return null;
-  };
-
-  const pageCar = await getServicesMain(getCarQuery());
-  console.log("pageCar: ", pageCar);
-  if (!pageCar.length) {
+  if (page.length === 0) {
     return null;
   }
 
-  const pageService = await getServicesMain(getServiceQuery());
+  return {
+    title: page[0].attributes?.SEO?.meta_title || page[0].attributes.title,
+    description: page[0].attributes?.SEO?.meta_description,
+    canonical: page[0].attributes.title,
+  };
+}
+
+export default async function CarPage({ params }) {
+  const queryServices = getServicesQuery(params.services);
+  const queryCars = getCarQuery(params.car);
+
+  const pageCar = await getData(queryCars);
+
+  if (!pageCar.length) {
+    return <NotFoundPage />;
+  }
+
+  const pageService = await getData(queryServices);
 
   const serviceTitle =
     pageService[0]?.attributes?.intro?.h1 ||
@@ -72,13 +47,13 @@ export default async function CarPage({ params }) {
 
   const carTitle = pageCar[0]?.attributes.car_model?.data
     ? pageCar[0]?.attributes.car_model?.data.attributes.car_brand.data
-        .attributes.title +
+        ?.attributes.title +
       " " +
-      pageCar[0]?.attributes.car_model.data.attributes.intro.h1 +
+      pageCar[0]?.attributes.car_model.data.attributes.intro?.h1 +
       " " +
       pageCar[0]?.attributes.intro.h1
     : pageCar[0]?.attributes.car_brand?.data
-    ? pageCar[0]?.attributes.car_brand?.data.attributes.intro.h1 +
+    ? pageCar[0]?.attributes.car_brand?.data.attributes.intro?.h1 +
       " " +
       pageCar[0]?.attributes.intro.h1
     : pageCar[0]?.attributes.intro.h1;
