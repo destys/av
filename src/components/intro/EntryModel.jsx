@@ -40,25 +40,31 @@ export default function EntryModel({
 
   useState(() => {}, []);
 
-  const options = brands.map((item) => ({
-    label: item.attributes.title,
-    value: item.attributes.title.toLowerCase(),
-    slug: item.attributes.slug,
-    models: item.attributes.car_models?.data,
-  }));
+  const options = brands
+    .filter((item) => item.attributes.hidden !== true)
+    .map((item) => ({
+      label: item.attributes.title,
+      value: item.attributes.title.toLowerCase(),
+      slug: item.attributes.slug,
+      models: item.attributes.car_models?.data,
+    }));
 
-  const options_models = models.map((item) => ({
-    label: item.attributes.title,
-    value: item.attributes.title.toLowerCase(),
-    slug: item.attributes.slug,
-    generations: item.attributes.car_generations,
-  }));
+  const options_models = models
+    .filter((item) => item.attributes.hidden !== true)
+    .map((item) => ({
+      label: item.attributes.title,
+      value: item.attributes.title.toLowerCase(),
+      slug: item.attributes.slug,
+      generations: item.attributes.car_generations,
+    }));
 
-  const options_generation = generations.map((item) => ({
-    label: item.attributes.title,
-    value: item.attributes.title.toLowerCase(),
-    slug: item.attributes.slug,
-  }));
+  const options_generation = generations
+    .filter((item) => item.attributes.hidden !== true)
+    .map((item) => ({
+      label: item.attributes.title,
+      value: item.attributes.title.toLowerCase(),
+      slug: item.attributes.slug,
+    }));
 
   return (
     <div className="grid sm:grid-cols-3 gap-2.5 sm:gap-4">

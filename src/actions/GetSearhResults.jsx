@@ -4,7 +4,7 @@ const getSearchResults = async (searchText) => {
     const allResults = await Promise.all(
       collections.map(async (collection) => {
         const response = await fetch(
-          `${process.env.API_URL}/api/${collection}?populate=deep&filters[title][$containsi]=${searchText}`,
+          `${process.env.API_URL}/api/${collection}?populate=deep&filters[$and][0][title][$contains]=${searchText}`,
           {
             method: "GET",
             headers: {
@@ -14,7 +14,9 @@ const getSearchResults = async (searchText) => {
           }
         );
         const data = await response.json();
-        return data.data.map((item) => ({ ...item, collection: collection }));
+        return data.data
+          .filter((item) => item.attributes.hidden !== true)
+          .map((item) => ({ ...item, collection: collection }));
       })
     );
 

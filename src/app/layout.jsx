@@ -1,8 +1,6 @@
 import { Golos_Text } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 
-import LayoutClient from "@/components/layout/Layout";
-
 const golos = Golos_Text({
   subsets: ["cyrillic", "latin"],
   weight: ["400", "500", "600", "700", "800", "900"],
@@ -11,6 +9,7 @@ const golos = Golos_Text({
 import ModalProvider from "@/providers/ModalProvider";
 
 import "./globals.scss";
+import LayoutClient from "../components/layout/Layout";
 
 export const metadata = {
   robots: "noindex, nofollow",

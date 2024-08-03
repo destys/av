@@ -62,12 +62,14 @@ export default function Models({ data, params }) {
                   href={`${params}_${item.attributes.slug}`}
                   className="flex flex-col items-center "
                 >
-                  <Image
-                    src={`${process.env.API_URL}${item.attributes.image.data.attributes.formats.small.url}`}
-                    width={150}
-                    height={150}
-                    alt={item.title}
-                  />
+                  {item.attributes?.image.data && (
+                    <Image
+                      src={`${process.env.API_URL}/${item.attributes?.image.data?.attributes?.formats?.small.url}`}
+                      width={150}
+                      height={150}
+                      alt={item.attributes.title}
+                    />
+                  )}
                   <p className="font-medium text-[32px] uppercase">
                     {item.attributes.title}
                   </p>

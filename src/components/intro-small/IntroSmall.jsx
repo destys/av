@@ -3,21 +3,23 @@ import Image from "next/image";
 import Button from "../ui/button/Button";
 
 import styles from "./IntroSmall.module.scss";
+import { replaceVariablesInText } from "@/utils/extractDataFromParams";
 
 export default function IntroSmall({
   title,
   description,
   image,
   isShowAdditional,
+  params,
 }) {
   return (
     <section className={styles.intro}>
       <div className={"container " + styles.container}>
         <div className={styles.top}>
           <div className={styles.content}>
-            <h1 className="mb-5">{title}</h1>
+            <h1 className="mb-5">{replaceVariablesInText(title, params)}</h1>
             <p className=" text-lynch-700 text-sm md:text-xl xl:md:text-2xl">
-              {description}
+              {replaceVariablesInText(description, params)}
             </p>
           </div>
           {image !== "undefined" && (

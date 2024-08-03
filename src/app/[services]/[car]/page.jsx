@@ -1,17 +1,17 @@
-import { pathToRegexp } from "path-to-regexp";
-
 import getData from "@/actions/GetData";
 import { getServicesQuery, getCarQuery } from "@/utils/getQueryUtils";
 
 import IntroSmall from "@/components/intro-small/IntroSmall";
 import Models from "@/components/models/Models";
 import Search from "@/components/search/Search";
-import PriceList from "@/components/price-list/PriceList";
 import Calculate from "@/components/calculate/Calculate";
 import Services from "@/components/services/Services";
 import TextBlock from "@/components/text-block/TextBlock";
 import FAQ from "@/components/faq/FAQ";
 import NotFoundPage from "@/app/not-found";
+import { generatePageTitle } from "@/utils/carTitleUtils";
+import PriceList from "@/components/price-list/PriceList";
+import { extractDataFromParams } from "@/utils/extractDataFromParams";
 
 export async function generateMetadata({ params }) {
   const query = getCarQuery(params.car);
@@ -33,32 +33,17 @@ export default async function CarPage({ params }) {
   const queryCars = getCarQuery(params.car);
 
   const pageCar = await getData(queryCars);
-
   if (!pageCar.length) {
     return <NotFoundPage />;
   }
 
   const pageService = await getData(queryServices);
 
-  const serviceTitle =
-    pageService[0]?.attributes?.intro?.h1 ||
-    pageService[0]?.attributes?.title ||
-    "";
+  const services = await getData(
+    "services-main?populate=deep&pagination[pageSize]=2000"
+  );
 
-  const carTitle = pageCar[0]?.attributes.car_model?.data
-    ? pageCar[0]?.attributes.car_model?.data.attributes.car_brand.data
-        ?.attributes.title +
-      " " +
-      pageCar[0]?.attributes.car_model.data.attributes.intro?.h1 +
-      " " +
-      pageCar[0]?.attributes.intro.h1
-    : pageCar[0]?.attributes.car_brand?.data
-    ? pageCar[0]?.attributes.car_brand?.data.attributes.intro?.h1 +
-      " " +
-      pageCar[0]?.attributes.intro.h1
-    : pageCar[0]?.attributes.intro.h1;
-
-  const pageTitle = `${serviceTitle || ""} ${carTitle || ""}`;
+  const pageTitle = generatePageTitle(pageService, pageCar);
 
   return (
     <>
@@ -70,10 +55,11 @@ export default async function CarPage({ params }) {
           data={pageCar[0]?.attributes.intro}
           parentData={pageService[0]?.attributes.intro}
           isShowAdditional={true}
+          params={params}
         />
       )}
 
-      {pageCar[0].attributes.car_models?.data && (
+      {!!pageCar[0].attributes.car_models?.data.length && (
         <Models
           data={pageCar[0].attributes.car_models.data}
           params={params.car}
@@ -81,17 +67,33 @@ export default async function CarPage({ params }) {
       )}
 
       <Search />
-      <PriceList />
+      {!!pageService.length ? (
+        !!!pageService[0]?.attributes?.service_type?.data?.attributes
+          ?.service_main && (
+          <Services
+            data={pageService[0].attributes?.services_sub?.data}
+            isPage={true}
+            params={params}
+          />
+        )
+      ) : (
+        <Services params={params} data={services} isPage={true} />
+      )}
+      {!!pageService[0]?.attributes?.service_type?.data?.attributes
+        ?.service_main && <PriceList />}
+
       <Calculate />
-      {!!pageCar[0]?.attributes.service_types && (
+      {!!pageService[0]?.attributes.service_types && (
         <Services
           title="Другие услуги для Audi"
-          data={pageCar[0]?.attributes.service_types?.data}
+          data={pageService[0]?.attributes.service_types?.data}
         />
       )}
 
-      <TextBlock content={pageCar[0].attributes.text_blocks} />
-      <FAQ />
+      <TextBlock content={pageCar[0].attributes.text_blocks} params={params} />
+      {!!pageCar[0].attributes?.faq?.data && (
+        <FAQ data={pageCar[0].attributes?.faq?.data} params={params} />
+      )}
     </>
   );
 }

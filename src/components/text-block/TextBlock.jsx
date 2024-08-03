@@ -3,9 +3,9 @@
 import styles from "./TextBlock.module.scss";
 import Button from "../ui/button/Button";
 import { useState } from "react";
-import RichTextRenderer from "./rich-text-render/RichTextRedner";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-export default function TextBlock({ content }) {
+export default function TextBlock({ content, params }) {
   const [open, setOpen] = useState(false);
 
   if (!content) {
@@ -15,11 +15,9 @@ export default function TextBlock({ content }) {
   return (
     <section className={styles.text}>
       <div className="container py-2.5 px-[15px] xs:p-5 sm:p-large md:py-x-large xl:px-x-large ">
-        <h2 className="mb-[15px] xs:mb-space-large xl:mb-x-large">
-          Вызов автопомощи в Москве и Подмосковье
-        </h2>
         <div className={`${styles.content} ${open && "!max-h-none"}`}>
-          <RichTextRenderer blocks={content} />
+          {/* <RichTextRenderer blocks={content} /> */}
+          <BlocksRenderer content={content} />
         </div>
         {!open && (
           <Button

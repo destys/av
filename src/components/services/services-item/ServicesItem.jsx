@@ -14,6 +14,10 @@ export default function ServicesItem({ params, item, isPage }) {
       href={
         currentPath === "/"
           ? item.attributes.slug
+          : params?.services === "catalog"
+          ? `/${item.attributes.slug}/${params.car}`
+          : params?.services
+          ? `/${params.services}_${item.attributes.slug}/${params.car}`
           : `${currentPath}_${item.attributes.slug}`
       }
       className={`${styles.primary} ${isPage && styles.servicesPage}`}
@@ -22,7 +26,12 @@ export default function ServicesItem({ params, item, isPage }) {
         {item.attributes.title}
       </h5>
       <div className="flex justify-between items-end w-full">
-        <Icon name={"arrow-link"} size={36} color={"fill-lynch-300"} className="max-md:max-w-7 max-md:max-h-7" />
+        <Icon
+          name={"arrow-link"}
+          size={36}
+          color={"fill-lynch-300"}
+          className="max-md:max-w-7 max-md:max-h-7"
+        />
         <div className="flex justify-end items-end w-12 h-12 basis-[48px] md:w-[72px] md:h-[72px] md:basis-[72px]">
           {item.attributes.icon.data && (
             <Image

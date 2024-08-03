@@ -1,4 +1,3 @@
-import getData from "@/actions/GetData";
 import { getServicesQuery } from "@/utils/getQueryUtils";
 
 import FAQ from "@/components/faq/FAQ";
@@ -9,6 +8,7 @@ import Services from "@/components/services/Services";
 import TextBlock from "@/components/text-block/TextBlock";
 import PriceList from "@/components/price-list/PriceList";
 import NotFoundPage from "../not-found";
+import getData from "@/actions/GetData";
 
 export async function generateMetadata({ params }) {
   const query = getServicesQuery(params.services);
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function ServicesMainPage({ params }) {
+export default async function ServicePage({ params }) {
   const query = getServicesQuery(params.services);
   const page = await getData(query);
 
@@ -37,13 +37,20 @@ export default async function ServicesMainPage({ params }) {
     <>
       <IntroBanner data={page[0].attributes?.intro} params={params} />
       <Search />
-      {page[0].attributes.services_sub?.data && (
-        <Services data={page[0].attributes?.services_sub?.data} isPage={true} />
+      {!!page[0].attributes.services_sub?.data?.length && (
+        <Services
+          data={page[0].attributes?.services_sub?.data}
+          isPage={true}
+          title={page[0].attributes.subservices_title}
+          description={page[0].attributes.subservices_text}
+        />
       )}
       {page[0].attributes.prices?.data && <PriceList />}
       <OurService />
-      <FAQ />
-      <TextBlock content={page[0].attributes?.text_blocks} />
+      {page[0].attributes.faq?.data && (
+        <FAQ data={page[0]?.attributes?.faq?.data} />
+      )}
+      <TextBlock content={page[0].attributes?.text_blocks} params={params} />
     </>
   );
 }

@@ -6,9 +6,11 @@ import IntroCallback from "./IntroCallback";
 
 import styles from "./IntroBanner.module.scss";
 import getPage from "@/actions/GetPage";
+import { replaceVariablesInText } from "@/utils/extractDataFromParams";
 
 export default async function IntroBanner({ data, params }) {
   const brands = await getPage("car-brands");
+  console.log('brands: ', brands);
 
   return (
     <section className={styles.intro}>
@@ -17,7 +19,7 @@ export default async function IntroBanner({ data, params }) {
           <div className={styles.image}>
             {data?.image.data?.attributes && (
               <Image
-                src={`${process.env.API_URL}${data.image.data.attributes.formats.small.url}`}
+                src={`${process.env.API_URL}${data.image.data?.attributes?.formats?.small.url}`}
                 width={data.image.data.attributes.formats.small.width}
                 height={data.image.data.attributes.formats.small.height}
                 alt={data.h1}
@@ -26,8 +28,8 @@ export default async function IntroBanner({ data, params }) {
             )}
           </div>
           <div className={styles.content}>
-            <h1 className="mb-5">{data?.h1}</h1>
-            <p>{data?.description}</p>
+            <h1 className="mb-5">{replaceVariablesInText(data?.h1, params)}</h1>
+            <p>{replaceVariablesInText(data?.description, params)}</p>
           </div>
           <div className={styles.entry}>
             <EntryModel brands={brands} params={params} />
