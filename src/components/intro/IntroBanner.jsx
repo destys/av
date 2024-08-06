@@ -10,7 +10,6 @@ import { replaceVariablesInText } from "@/utils/extractDataFromParams";
 
 export default async function IntroBanner({ data, params }) {
   const brands = await getPage("car-brands");
-  console.log('brands: ', brands);
 
   return (
     <section className={styles.intro}>
