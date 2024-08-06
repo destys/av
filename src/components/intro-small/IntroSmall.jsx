@@ -18,7 +18,7 @@ export default async function IntroSmall({
       <div className={"container " + styles.container}>
         <div className={styles.top}>
           <div className={styles.content}>
-            <h1 className="mb-5">{await replaceVariablesInText(title, params)}</h1>
+            <h1 className="mb-5">{replaceVariablesInText(title, params)}</h1>
             <p className=" text-lynch-700 text-sm md:text-xl xl:md:text-2xl">
               {replaceVariablesInText(description, params)}
             </p>

@@ -95,7 +95,7 @@ async function processCarData(carParam, data) {
  * @returns {string} - Текст с замененными переменными
  */
 export async function replaceVariablesInText(text, params) {
-    if (text === null) return null;
+    if (!text) return null;
     const data = await extractDataFromParams(params);
 
     return text.replace(/{(S1|S2|S3|AR1|AR2|AR3)}/g, (match, p1) => {
