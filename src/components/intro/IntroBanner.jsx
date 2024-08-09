@@ -8,7 +8,9 @@ import styles from "./IntroBanner.module.scss";
 import getPage from "@/actions/GetPage";
 import { replaceVariablesInText } from "@/utils/extractDataFromParams";
 
-export default async function IntroBanner({ data, params }) {
+export default async function IntroBanner({ data, params, equipmentTypes }) {
+  console.log('equipmentTypes: ', equipmentTypes);
+  console.log('data: ', data);
   const brands = await getPage("car-brands");
 
   return (
@@ -31,7 +33,7 @@ export default async function IntroBanner({ data, params }) {
             <p>{replaceVariablesInText(data?.description, params)}</p>
           </div>
           <div className={styles.entry}>
-            <EntryModel brands={brands} params={params} />
+            <EntryModel brands={brands} params={params} equipmentTypes={equipmentTypes?.map(item => item.attributes.title)} />
           </div>
         </div>
         <div className={styles.right}>

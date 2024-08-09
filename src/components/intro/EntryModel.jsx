@@ -8,6 +8,7 @@ import Input from "../ui/input/Input";
 
 export default function EntryModel({
   params,
+  equipmentTypes,
   brands,
   hideLink,
   showYear = false,
@@ -40,23 +41,30 @@ export default function EntryModel({
 
   useState(() => {}, []);
 
-  const options = brands
-    .filter((item) => item.attributes.hidden !== true)
-    .map((item) => ({
-      label: item.attributes.title,
-      value: item.attributes.title.toLowerCase(),
-      slug: item.attributes.slug,
-      models: item.attributes.car_models?.data,
-    }));
+  const filterOptions = (item) => {
+    const isHidden = item.attributes.hidden !== true;
+    const hasValidEquipmentTypes =
+      equipmentTypes === undefined ||
+      item.attributes.equipment_types.data.some((type) =>
+        equipmentTypes.includes(type.attributes.title)
+      );
 
-  const options_models = models
-    .filter((item) => item.attributes.hidden !== true)
-    .map((item) => ({
-      label: item.attributes.title,
-      value: item.attributes.title.toLowerCase(),
-      slug: item.attributes.slug,
-      generations: item.attributes.car_generations,
-    }));
+    return isHidden && hasValidEquipmentTypes;
+  };
+
+  const options = brands.filter(filterOptions).map((item) => ({
+    label: item.attributes.title,
+    value: item.attributes.title.toLowerCase(),
+    slug: item.attributes.slug,
+    models: item.attributes.car_models?.data,
+  }));
+
+  const options_models = models.filter(filterOptions).map((item) => ({
+    label: item.attributes.title,
+    value: item.attributes.title.toLowerCase(),
+    slug: item.attributes.slug,
+    generations: item.attributes.car_generations,
+  }));
 
   const options_generation = generations
     .filter((item) => item.attributes.hidden !== true)

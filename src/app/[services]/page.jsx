@@ -28,6 +28,7 @@ export async function generateMetadata({ params }) {
 export default async function ServicePage({ params }) {
   const query = getServicesQuery(params.services);
   const page = await getData(query);
+  console.log("page: ", page[0].equipment_types?.data);
 
   if (page.length === 0) {
     return <NotFoundPage />;
@@ -35,7 +36,11 @@ export default async function ServicePage({ params }) {
 
   return (
     <>
-      <IntroBanner data={page[0].attributes?.intro} params={params} />
+      <IntroBanner
+        data={page[0].attributes?.intro}
+        params={params}
+        equipmentTypes={page[0].attributes.equipment_types?.data}
+      />
       <Search />
       {!!page[0].attributes.services_sub?.data?.length && (
         <Services

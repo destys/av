@@ -31,6 +31,7 @@ export async function generateMetadata({ params }) {
 export default async function CarPage({ params }) {
   const queryServices = getServicesQuery(params.services);
   const queryCars = getCarQuery(params.car);
+  console.log('queryCars: ', queryCars);
 
   const pageCar = await getData(queryCars);
   if (!pageCar.length) {
@@ -71,7 +72,26 @@ export default async function CarPage({ params }) {
         !!!pageService[0]?.attributes?.service_type?.data?.attributes
           ?.service_main && (
           <Services
-            data={pageService[0].attributes?.services_sub?.data}
+            data={
+              pageService[0].attributes?.services_sub?.data.filter(
+                (service) => {
+                  // Получаем массив equipment_types для текущего сервиса
+                  const serviceEquipmentTypes =
+                    service.attributes.equipment_types?.data || [];
+
+                  // Получаем массив equipment_types для pageCar
+                  const pageCarEquipmentTypes =
+                    pageCar[0]?.attributes?.equipment_types?.data || [];
+
+                  // Проверяем, включает ли serviceEquipmentTypes хотя бы один элемент из pageCarEquipmentTypes
+                  return serviceEquipmentTypes.some((serviceType) =>
+                    pageCarEquipmentTypes.some(
+                      (carType) => carType.id === serviceType.id
+                    )
+                  );
+                }
+              ) || []
+            }
             isPage={true}
             params={params}
           />

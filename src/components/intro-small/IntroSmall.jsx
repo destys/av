@@ -12,7 +12,7 @@ export default async function IntroSmall({
   isShowAdditional,
   params,
 }) {
-  console.log('title: ', title);
+  console.log('title: ', description);
   return (
     <section className={styles.intro}>
       <div className={"container " + styles.container}>
