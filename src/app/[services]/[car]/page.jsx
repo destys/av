@@ -11,7 +11,6 @@ import FAQ from "@/components/faq/FAQ";
 import NotFoundPage from "@/app/not-found";
 import { generatePageTitle } from "@/utils/carTitleUtils";
 import PriceList from "@/components/price-list/PriceList";
-import { extractDataFromParams } from "@/utils/extractDataFromParams";
 
 export async function generateMetadata({ params }) {
   const query = getCarQuery(params.car);
@@ -31,9 +30,9 @@ export async function generateMetadata({ params }) {
 export default async function CarPage({ params }) {
   const queryServices = getServicesQuery(params.services);
   const queryCars = getCarQuery(params.car);
-  console.log('queryCars: ', queryCars);
 
   const pageCar = await getData(queryCars);
+  console.log('pageCar: ', pageCar[0]);
   if (!pageCar.length) {
     return <NotFoundPage />;
   }
@@ -63,6 +62,13 @@ export default async function CarPage({ params }) {
       {!!pageCar[0].attributes.car_models?.data.length && (
         <Models
           data={pageCar[0].attributes.car_models.data}
+          params={params.car}
+        />
+      )}
+
+      {!!pageCar[0].attributes.car_generations?.data.length && (
+        <Models
+          data={pageCar[0].attributes.car_generations.data}
           params={params.car}
         />
       )}

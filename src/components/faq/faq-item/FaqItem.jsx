@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import Icon from "@/components/ui/icon/Icon";
 
 export default function FAQItem({ item }) {
-  console.log("item: ", item);
   const [open, setOpen] = useState(false);
-  console.log("open: ", open);
 
   return (
     <div className="mb-3.5 cursor-pointer" onClick={() => setOpen(!open)}>
