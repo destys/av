@@ -10,7 +10,6 @@ export async function generateMetadata() {
 
 const MapPage = async () => {
     const servicesMain = await getPage("services-main");
-    console.log('servicesMain: ', servicesMain);
     return (
         <section className="p-6">
             <div>

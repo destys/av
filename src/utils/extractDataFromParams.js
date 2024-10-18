@@ -94,16 +94,49 @@ async function processCarData(carParam, data) {
  * @param {Object} data - Объект данных
  * @returns {string} - Текст с замененными переменными
  */
-export async function replaceVariablesInText(text, params) {
-    if (!text) return null;
+export async function replaceVariablesInText(textBlocks, params) {
+    if (!textBlocks) return null;
+
     const data = await extractDataFromParams(params);
 
-    return text.replace(/{(S1|S2|S3|AR1|AR2|AR3)}/g, (match, p1) => {
-        const replacement = data[p1];
-        if (replacement === null || replacement === undefined) {
-            console.warn(`No data found for ${p1}. Using original placeholder.`);
-            return match;  // Возвращает оригинальный текст, если данных нет
-        }
-        return replacement;
-    });
+    // Проверим, является ли textBlocks строкой
+    if (typeof textBlocks === 'string') {
+        // Заменяем переменные в строке и возвращаем результат
+        return textBlocks.replace(/{(S1|S2|S3|AR1|AR2|AR3)}/g, (match, p1) => {
+            const replacement = data[p1];
+            if (replacement === null || replacement === undefined) {
+                console.warn(`No data found for ${p1}. Using original placeholder.`);
+                return match;  // Возвращает оригинальный текст, если данных нет
+            }
+            return replacement;
+        });
+    }
+
+    // Если textBlocks является массивом объектов
+    if (Array.isArray(textBlocks)) {
+        return textBlocks.map(block => {
+            // Проверим, что у блока есть поле children
+            if (block.children && Array.isArray(block.children)) {
+                // Проходим по каждому дочернему элементу
+                block.children = block.children.map(child => {
+                    if (child.type === 'text' && typeof child.text === 'string') {
+                        // Заменяем переменные в тексте
+                        child.text = child.text.replace(/{(S1|S2|S3|AR1|AR2|AR3)}/g, (match, p1) => {
+                            const replacement = data[p1];
+                            if (replacement === null || replacement === undefined) {
+                                console.warn(`No data found for ${p1}. Using original placeholder.`);
+                                return match;  // Возвращает оригинальный текст, если данных нет
+                            }
+                            return replacement;
+                        });
+                    }
+                    return child;
+                });
+            }
+            return block;
+        });
+    }
+
+    // Если формат данных не поддерживается, возвращаем null
+    return null;
 }

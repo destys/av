@@ -28,7 +28,6 @@ export async function generateMetadata({ params }) {
 export default async function ServicePage({ params }) {
   const query = getServicesQuery(params.services);
   const page = await getData(query);
-  console.log("page: ", page[0].equipment_types?.data);
 
   if (page.length === 0) {
     return <NotFoundPage />;

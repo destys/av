@@ -1,6 +1,5 @@
 import getData from "@/actions/GetData";
 import { getServicesQuery, getCarQuery } from "@/utils/getQueryUtils";
-
 import IntroSmall from "@/components/intro-small/IntroSmall";
 import Models from "@/components/models/Models";
 import Search from "@/components/search/Search";
@@ -11,6 +10,7 @@ import FAQ from "@/components/faq/FAQ";
 import NotFoundPage from "@/app/not-found";
 import { generatePageTitle } from "@/utils/carTitleUtils";
 import PriceList from "@/components/price-list/PriceList";
+import { replaceVariablesInText } from "@/utils/extractDataFromParams";
 
 export async function generateMetadata({ params }) {
   const query = getCarQuery(params.car);
@@ -32,18 +32,25 @@ export default async function CarPage({ params }) {
   const queryCars = getCarQuery(params.car);
 
   const pageCar = await getData(queryCars);
-  console.log('pageCar: ', pageCar[0]);
+
   if (!pageCar.length) {
     return <NotFoundPage />;
   }
 
   const pageService = await getData(queryServices);
-
   const services = await getData(
     "services-main?populate=deep&pagination[pageSize]=2000"
   );
 
   const pageTitle = generatePageTitle(pageService, pageCar);
+
+  // Получаем текстовые блоки и заменяем переменные
+  const textBlocks = pageService.length
+    ? await replaceVariablesInText(
+        pageService[0].attributes.text_blocks,
+        params
+      )
+    : pageCar[0].attributes.text_blocks;
 
   return (
     <>
@@ -81,15 +88,11 @@ export default async function CarPage({ params }) {
             data={
               pageService[0].attributes?.services_sub?.data.filter(
                 (service) => {
-                  // Получаем массив equipment_types для текущего сервиса
                   const serviceEquipmentTypes =
                     service.attributes.equipment_types?.data || [];
-
-                  // Получаем массив equipment_types для pageCar
                   const pageCarEquipmentTypes =
                     pageCar[0]?.attributes?.equipment_types?.data || [];
 
-                  // Проверяем, включает ли serviceEquipmentTypes хотя бы один элемент из pageCarEquipmentTypes
                   return serviceEquipmentTypes.some((serviceType) =>
                     pageCarEquipmentTypes.some(
                       (carType) => carType.id === serviceType.id
@@ -116,7 +119,10 @@ export default async function CarPage({ params }) {
         />
       )}
 
-      <TextBlock content={pageCar[0].attributes.text_blocks} params={params} />
+      <TextBlock
+        content={textBlocks} // Передаем результат после замены переменных
+        params={params}
+      />
       {!!pageCar[0].attributes?.faq?.data && (
         <FAQ data={pageCar[0].attributes?.faq?.data} params={params} />
       )}

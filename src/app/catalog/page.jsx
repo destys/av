@@ -4,7 +4,6 @@ import OurService from "@/components/our-service/OurService";
 import Search from "@/components/search/Search";
 
 export default function CatalogPage() {
-  console.log('first')
   return (
     <>
       <IntroSmall

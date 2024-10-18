@@ -4,6 +4,7 @@ import styles from "./TextBlock.module.scss";
 import Button from "../ui/button/Button";
 import { useState } from "react";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import RichTextRenderer from "./rich-text-render/RichTextRedner";
 
 export default function TextBlock({ content, params }) {
   const [open, setOpen] = useState(false);

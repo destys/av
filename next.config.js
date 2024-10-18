@@ -20,8 +20,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'api.lipsar.com',
+        protocol: 'http',
+        hostname: 'api.drive9.ru',
         pathname: '**',
       },
     ],
