@@ -42,6 +42,7 @@ const Input = forwardRef(
               className="w-full xl:text-[22px] bg-white leading-none"
               placeholder={placeholder || "+7 (999) 000-00-00"}
               ref={ref}
+              {...props}
             />
           ) : (
             <input

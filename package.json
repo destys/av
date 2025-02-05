@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/themes": "^2.0.3",
     "@strapi/blocks-react-renderer": "^1.0.1",
     "axios": "^1.6.8",

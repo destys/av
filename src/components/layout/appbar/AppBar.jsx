@@ -1,10 +1,12 @@
 "use client";
 import Icon from "@/components/ui/icon/Icon";
 import useCallbackModal from "@/hooks/useCallbackModal";
+import useRegistrationModal from "@/hooks/useRegistrationModal";
 import Link from "next/link";
 
 export default function AppBar() {
   const callbackModal = useCallbackModal();
+  const registrationModal = useRegistrationModal();
 
   const navigation = [
     {
@@ -28,9 +30,10 @@ export default function AppBar() {
     },
     {
       id: 3,
-      title: "Вход",
+      title: "Профиль",
       icon: "profile",
-      link: "/profile",
+      link: "#",
+      onClick: registrationModal.onOpen,
     },
     {
       id: 4,

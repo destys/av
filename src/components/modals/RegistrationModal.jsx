@@ -17,6 +17,8 @@ import {
   MoonLoader,
   RotateLoader,
 } from "react-spinners";
+import { emailRecipient } from "@/constants";
+import useSuccessModal from "@/hooks/useSuccessModal";
 
 export default function RegistrationModal() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,6 +26,7 @@ export default function RegistrationModal() {
   const { onClose, isOpen } = useRegistrationModal();
   const router = useRouter();
   const { login } = useAuthStore();
+  const successModal = useSuccessModal();
 
   const onChange = (open) => {
     if (!open) {
@@ -50,7 +53,7 @@ export default function RegistrationModal() {
       password: formData.get("password"),
     };
 
-    axios
+    /* axios
       .post(
         `${process.env.API_URL}/api/auth/local/register?populate=role`,
         data
@@ -81,6 +84,32 @@ export default function RegistrationModal() {
         setError(error.response.data.error.message);
         setIsLoading(false);
       })
+      .finally(() => setIsLoading(false)); */
+
+    axios
+      .post(
+        `${process.env.API_URL}/api/email`,
+        {
+          to: emailRecipient,
+          replyTo: emailRecipient || "noreply@example.com",
+          subject: "Новая регистрация",
+          html: `<p><strong>Имя: </strong>${data.name}</p><p><strong>Email: </strong>${data.email}</p>`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.API_TOKEN}`,
+          },
+        }
+      )
+      .then((response) => {
+        onChange();
+        successModal.onOpen();
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error);
+        setError(error.response.data.error.message);
+        setIsLoading(false);
+      })
       .finally(() => setIsLoading(false));
   };
 
@@ -104,7 +133,7 @@ export default function RegistrationModal() {
             />
             <label
               htmlFor="client"
-              className="block p-3 w-full h-full font-medium text-3xl text-center rounded-x-large transition-colors peer-checked:bg-navy peer-checked:text-white"
+              className="block p-3 w-full h-full font-medium text-lg md:text-3xl text-center rounded-x-large transition-colors peer-checked:bg-navy peer-checked:text-white"
             >
               Клиент
             </label>
@@ -119,7 +148,7 @@ export default function RegistrationModal() {
             />
             <label
               htmlFor="partner"
-              className="block p-3 w-full h-full font-medium text-3xl text-center rounded-x-large transition-colors peer-checked:bg-navy peer-checked:text-white"
+              className="block p-3 w-full h-full font-medium text-lg md:text-3xl text-center rounded-x-large transition-colors peer-checked:bg-navy peer-checked:text-white"
             >
               Партнер
             </label>
@@ -141,6 +170,7 @@ export default function RegistrationModal() {
           className="mb-4"
           required
         />
+        {/* 
         <Input
           label="Пароль"
           type="password"
@@ -154,7 +184,7 @@ export default function RegistrationModal() {
           name="confirm_password"
           placeholder={"***************"}
           className="mb-space-large"
-        />
+        /> */}
         {error && (
           <p className="-mt-6 mb-4 px-large py-medium rounded-x-large border border-red-800 bg-red-100 text-red-600">
             {error}

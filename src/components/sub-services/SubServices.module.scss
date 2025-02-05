@@ -6,15 +6,12 @@
             @apply md:text-[22px] lg:text-right xl:text-2xl leading-normal;
         }
     }
-    .list_primary {
-        @apply grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-2.5 sm:gap-5 2xl:gap-7;
+    .list {
+        @apply grid md:grid-cols-2 xl:grid-cols-3 gap-2 sm:gap-4 lg:gap-5 xl:gap-7;
 
         &.isPage {
             @apply max-xs:grid-cols-1;
         }
-    }
-    .list_secondary {
-        @apply grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-2.5 sm:gap-5 2xl:gap-7;
     }
 }
 @keyframes fadeIn {

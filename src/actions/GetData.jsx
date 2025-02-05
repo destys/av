@@ -12,13 +12,13 @@ export default async function getData(query) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`); 
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const data = await response.json();
-    return data.data; 
+    return data.data;
   } catch (error) {
     console.error("Ошибка при получении данных:", error);
-    throw error; 
+    throw error;
   }
 }

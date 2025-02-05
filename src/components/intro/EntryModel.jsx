@@ -18,6 +18,9 @@ export default function EntryModel({
   const [modelSlug, setModelSlug] = useState("");
   const [models, setModels] = useState([]);
   const [generations, setGenerations] = useState([]);
+  
+  console.log('brands: ', brands);
+  console.log('equipmentTypes: ', equipmentTypes);
 
   const handleSelectBrand = (selectedOption) => {
     setModels(selectedOption.models);

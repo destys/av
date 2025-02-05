@@ -66,9 +66,9 @@ const Select = ({
           ref={searchRef}
         />
         <ul className=" overflow-auto max-h-[277px]">
-          {options.map((item) => (
+          {options.map((item, index) => (
             <li
-              key={item.slug}
+              key={item.slug + "-" + index}
               className={`text-black ${
                 item.label.toLowerCase().includes(searchText.toLowerCase())
                   ? "block"

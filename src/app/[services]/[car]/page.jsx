@@ -52,13 +52,18 @@ export default async function CarPage({ params }) {
       )
     : pageCar[0].attributes.text_blocks;
 
+  const introDescription = await replaceVariablesInText(
+    pageService[0]?.attributes.intro?.description ||
+      pageCar[0].attributes.intro.description
+  );
+
   return (
     <>
       {!!pageCar[0].attributes.intro && (
         <IntroSmall
           image={`${pageCar[0]?.attributes?.intro.image.data?.attributes.formats.small.url}`}
           title={pageTitle}
-          description={pageCar[0].attributes.intro.description}
+          description={introDescription}
           data={pageCar[0]?.attributes.intro}
           parentData={pageService[0]?.attributes.intro}
           isShowAdditional={true}

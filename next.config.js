@@ -20,7 +20,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 'api.drive9.ru',
         pathname: '**',
       },

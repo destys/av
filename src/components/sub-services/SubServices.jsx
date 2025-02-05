@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import styles from "./Services.module.scss";
-import ServicesItem from "./services-item/ServicesItem";
+import styles from "./SubServices.module.scss";
+import SubServicesItem from "./sub-services-item/SubServicesItem";
 import Button from "../ui/button/Button";
 
-export default function Services({ title, description, data, isPage, params }) {
+export default function SubServices({ title, description, data, isPage, params }) {
   const [visibleItems, setVisibleItems] = useState(10); // По умолчанию показываем 10 (для больших экранов)
   const [showAll, setShowAll] = useState(false);
 
@@ -15,9 +15,9 @@ export default function Services({ title, description, data, isPage, params }) {
     if (width <= 480) {
       setVisibleItems(6);
     } else if (width <= 1440) {
-      setVisibleItems(9);
+      setVisibleItems(8);
     } else {
-      setVisibleItems(10);
+      setVisibleItems(12);
     }
   };
 
@@ -31,19 +31,19 @@ export default function Services({ title, description, data, isPage, params }) {
   return (
     <section className={styles.services}>
       <div className="container flex flex-col gap-2.5 xs:gap-5 sm:gap-space-large xl:gap-x-large py-5 px-4 xs:py-large sm:px-large md:py-x-large xl:p-x-large rounded-2xl xs:rounded-large bg-lynch-100">
-        <div className={styles.top}>
+        {/* <div className={styles.top}>
           <h2 className="tracking-[-0.91px] md:tracking-[-3.12px] leading-none">
             {title || "Услуги"}
           </h2>
           <p>{description}</p>
-        </div>
+        </div> */}
         {data?.length > 0 && (
-          <div className={`${styles.list_primary}  ${isPage && styles.isPage}`}>
+          <div className={styles.list}>
             {data
               .filter((item) => item.attributes.hidden !== true)
               .slice(0, showAll ? data.length : visibleItems) // Показываем ограниченное количество или все
               .map((item) => (
-                <ServicesItem
+                <SubServicesItem
                   key={item.id}
                   item={item}
                   isPage={isPage}

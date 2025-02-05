@@ -1,0 +1,1 @@
+export const emailRecipient = '84959995599@mail.ru';

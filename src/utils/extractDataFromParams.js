@@ -29,6 +29,7 @@ function initializeDataObject() {
         S1: null,
         S2: null,
         S3: null,
+        AR0: null,
         AR1: null,
         AR2: null,
         AR3: null
@@ -71,18 +72,17 @@ async function processServicesData(servicesParam, data) {
 async function processCarData(carParam, data) {
     const query = getCarQuery(carParam);
     const cars = await getData(query);
-
     if (cars.length > 0) {
         const attributes = cars[0].attributes;
-        const carModel = attributes.car_model?.data?.attributes;
-        const carBrand = carModel?.car_brand?.data;
-
-        if (carBrand) {
-            data.AR1 = carBrand.attributes.title;
-            data.AR2 = carModel.title;
-            data.AR3 = attributes.title;
+        
+        if (attributes.car_models?.data) {
+            data.AR1 = attributes.title;
+        } else if (attributes.car_brand?.data) {
+            data.AR1 = attributes.car_brand?.data.attributes.title;
+            data.AR2 = attributes.title;
         } else {
-            data.AR2 = carModel?.title;
+            data.AR1 = attributes.car_model.data.attributes.car_brand.data.attributes.title;
+            data.AR2 = attributes.car_model.data.attributes.title;
             data.AR3 = attributes.title;
         }
     }
@@ -101,33 +101,21 @@ export async function replaceVariablesInText(textBlocks, params) {
 
     // Проверим, является ли textBlocks строкой
     if (typeof textBlocks === 'string') {
-        // Заменяем переменные в строке и возвращаем результат
-        return textBlocks.replace(/{(S1|S2|S3|AR1|AR2|AR3)}/g, (match, p1) => {
+        return textBlocks.replace(/{(S1|S2|S3|AR0|AR1|AR2|AR3)}/g, (match, p1) => {
             const replacement = data[p1];
-            if (replacement === null || replacement === undefined) {
-                console.warn(`No data found for ${p1}. Using original placeholder.`);
-                return match;  // Возвращает оригинальный текст, если данных нет
-            }
-            return replacement;
+            return replacement !== null && replacement !== undefined ? replacement : ""; // Убираем плейсхолдер, если данных нет
         });
     }
 
     // Если textBlocks является массивом объектов
     if (Array.isArray(textBlocks)) {
         return textBlocks.map(block => {
-            // Проверим, что у блока есть поле children
             if (block.children && Array.isArray(block.children)) {
-                // Проходим по каждому дочернему элементу
                 block.children = block.children.map(child => {
                     if (child.type === 'text' && typeof child.text === 'string') {
-                        // Заменяем переменные в тексте
                         child.text = child.text.replace(/{(S1|S2|S3|AR1|AR2|AR3)}/g, (match, p1) => {
                             const replacement = data[p1];
-                            if (replacement === null || replacement === undefined) {
-                                console.warn(`No data found for ${p1}. Using original placeholder.`);
-                                return match;  // Возвращает оригинальный текст, если данных нет
-                            }
-                            return replacement;
+                            return replacement !== null && replacement !== undefined ? replacement : ""; // Убираем плейсхолдер, если данных нет
                         });
                     }
                     return child;
@@ -137,6 +125,5 @@ export async function replaceVariablesInText(textBlocks, params) {
         });
     }
 
-    // Если формат данных не поддерживается, возвращаем null
     return null;
 }

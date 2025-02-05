@@ -3,12 +3,12 @@
 import IconButton from "@/components/ui/iconButton/IconButton";
 import Logotype from "@/components/ui/logotype/Logotype";
 import CityChoice from "./components/CityChoice";
-import Actions from "./components/Actions";
 
 import styles from "./Header.module.scss";
 import { useState } from "react";
 import Link from "next/link";
 import Button from "@/components/ui/button/Button";
+import GetAccess from "./components/GetAccess";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -64,7 +64,8 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <Actions />
+          {/* <Actions /> */}
+          <GetAccess />
         </div>
       </div>
     </header>
