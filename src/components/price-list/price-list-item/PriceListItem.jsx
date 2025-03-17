@@ -4,7 +4,8 @@ import useCallbackModal from "@/hooks/useCallbackModal";
 import Link from "next/link";
 import React from "react";
 
-export default function PriceListItem({ item }) {
+export default function PriceListItem({ item, params }) {
+  console.log('params: ', params);
   const { onOpen } = useCallbackModal();
   return (
     <button

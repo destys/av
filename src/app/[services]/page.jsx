@@ -9,15 +9,15 @@ import TextBlock from "@/components/text-block/TextBlock";
 import PriceList from "@/components/price-list/PriceList";
 import NotFoundPage from "../not-found";
 import getData from "@/actions/GetData";
+import { replaceVariablesInText } from "@/utils/extractDataFromParams";
 
 export async function generateMetadata({ params }) {
   const query = getServicesQuery(params.services);
   const page = await getData(query);
-  
+
   if (page.length === 0) {
     return null;
   }
-  console.log('page: ', page[0].attributes.equipment_types);
 
   return {
     title: page[0].attributes?.SEO?.meta_title || page[0].attributes.title,
@@ -33,6 +33,10 @@ export default async function ServicePage({ params }) {
   if (page.length === 0) {
     return <NotFoundPage />;
   }
+
+  const textBlocks = page.length
+    ? await replaceVariablesInText(page[0].attributes?.text_blocks, params)
+    : "";
 
   return (
     <>
@@ -51,13 +55,13 @@ export default async function ServicePage({ params }) {
         />
       )}
       {page[0].attributes.pricelist?.prices.length && (
-        <PriceList data={page[0].attributes.pricelist} />
+        <PriceList data={page[0].attributes.pricelist} params={params} />
       )}
       <OurService />
       {page[0].attributes.faq?.data && (
-        <FAQ data={page[0]?.attributes?.faq?.data} />
+        <FAQ data={page[0]?.attributes?.faq?.data} params={params} />
       )}
-      <TextBlock content={page[0].attributes?.text_blocks} params={params} />
+      <TextBlock content={textBlocks} params={params} />
     </>
   );
 }

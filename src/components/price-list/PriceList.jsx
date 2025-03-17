@@ -1,22 +1,36 @@
+import { replaceVariablesInText } from "@/utils/extractDataFromParams";
 import styles from "./PriceList.module.scss";
 import PriceListItem from "./price-list-item/PriceListItem";
 
-import { PRICELIST } from "./price-list.data";
+export default async function PriceList({ data, params }) {
+  if (!data) return null;
 
-export default function PriceList({ data }) {
-  
+  // Обрабатываем заголовки прайс-листа
+  const prices = await Promise.all(
+    data.prices.map(async (item) => ({
+      ...item,
+      title: await replaceVariablesInText(item.title, params),
+    }))
+  );
+
+  // Обрабатываем заголовок и описание
+  const title = data?.title
+    ? await replaceVariablesInText(data.title, params)
+    : "";
+  const description = data?.description
+    ? await replaceVariablesInText(data.description, params)
+    : "";
+
   return (
     <section className={styles.price_list}>
-      <div className="container  xl:p-x-large">
+      <div className="container xl:p-x-large">
         <div className={styles.top}>
-          <h2>{data.title}</h2>
-          <p>
-            {data.description}
-          </p>
+          {title && <h2>{title}</h2>}
+          {description && <p>{description}</p>}
         </div>
         <div className={styles.list}>
-          {data.prices.map((item) => (
-            <PriceListItem key={item.id} item={item} />
+          {prices.map((item) => (
+            <PriceListItem key={item.id} item={item} params={params} />
           ))}
         </div>
       </div>

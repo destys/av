@@ -114,7 +114,7 @@ export default async function CarPage({ params }) {
         <Services params={params} data={services} isPage={true} />
       )}
       {!!pageService[0]?.attributes?.service_type?.data?.attributes
-        ?.service_main && <PriceList />}
+        ?.service_main && <PriceList params={params} />}
 
       <Calculate />
       {!!pageService[0]?.attributes.service_types && (

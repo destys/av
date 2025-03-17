@@ -4,6 +4,7 @@ import Button from "../ui/button/Button";
 
 import styles from "./IntroSmall.module.scss";
 import { replaceVariablesInText } from "@/utils/extractDataFromParams";
+import { convertMarkdownLinks } from "@/utils/convertMarkDowns";
 
 export default async function IntroSmall({
   title,
@@ -18,9 +19,14 @@ export default async function IntroSmall({
         <div className={styles.top}>
           <div className={styles.content}>
             <h1 className="mb-5">{replaceVariablesInText(title, params)}</h1>
-            <p className=" text-lynch-700 text-sm md:text-xl xl:md:text-2xl">
-              {replaceVariablesInText(description, params)}
-            </p>
+            {description && (
+              <p className=" text-lynch-700 text-sm md:text-xl xl:md:text-2xl">
+                {replaceVariablesInText(
+                  convertMarkdownLinks(description, "text-navy underline"),
+                  params
+                )}
+              </p>
+            )}
           </div>
           {image !== "undefined" && (
             <div className={styles.image}>
